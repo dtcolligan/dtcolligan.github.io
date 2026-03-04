@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dom Colligan</title>
     <style>
         body {
@@ -12,37 +14,80 @@
             line-height: 1.7;
         }
         h1 { font-size: 2em; margin-bottom: 0.2em; }
+        h2 { margin-top: 2em; font-size: 1.3em; }
         .subtitle { color: #666; margin-bottom: 2em; }
-        a { color: #2e8b8b; }
-        .section { margin-top: 2em; }
+        a { color: #2e8b8b; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .project { margin-bottom: 1.5em; }
+        .project-title { font-weight: bold; }
+        .project-desc { color: #444; margin-top: 0.2em; }
+        .tag {
+            display: inline-block;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.75em;
+            color: #555;
+            background: #f0f0f0;
+            padding: 2px 7px;
+            border-radius: 3px;
+            margin-right: 4px;
+        }
+        .links { margin-top: 2em; }
+        .links a { margin-right: 1.5em; }
     </style>
 </head>
 <body>
     <h1>Dom Colligan</h1>
-    <p class="subtitle">Economics, Finance & Data Science — Imperial College London</p>
+    <p class="subtitle">Economics, Finance & Data Science &mdash; Imperial College London</p>
 
-    <div class="section">
+    <div>
         <h2>About</h2>
         <p>First-year undergraduate at Imperial studying EFDS. Interested in
-        AI systems, machine learning, alignment, and the intersection of
+        machine learning, agentic AI systems, and the intersection of
         economic thinking and artificial intelligence.</p>
+        <p>Currently building ML implementations from scratch and working towards
+        research in ML engineering and agentic AI.</p>
     </div>
 
-    <div class="section">
+    <div>
         <h2>Projects</h2>
-        <p><em>Coming soon.</em></p>
+
+        <div class="project">
+            <p class="project-title">
+                <a href="https://github.com/dtcolligan/ml-from-scratch">ML From Scratch</a>
+            </p>
+            <p class="project-desc">Core ML algorithms implemented from first principles in NumPy.
+            Gradient descent, linear regression, and building towards a full autograd engine
+            and neural networks.</p>
+            <span class="tag">Python</span>
+            <span class="tag">NumPy</span>
+            <span class="tag">ML</span>
+        </div>
+
+        <div class="project">
+            <p class="project-title">
+                <a href="https://github.com/dtcolligan/garmin_lab">Health Lab</a>
+            </p>
+            <p class="project-desc">Health analytics platform with an ML-powered food logger,
+            Garmin wearable data pipeline, and interactive dashboards. Includes a trained
+            portion estimation model and a Flask web interface.</p>
+            <span class="tag">Python</span>
+            <span class="tag">scikit-learn</span>
+            <span class="tag">Flask</span>
+            <span class="tag">Data Engineering</span>
+        </div>
     </div>
 
-    <div class="section">
-        <h2>Writing</h2>
-        <p><em>Coming soon.</em></p>
+    <div>
+        <h2>Direction</h2>
+        <p>ML engineering and agentic AI &mdash; systems that plan, use tools, and act
+        autonomously across multi-step tasks. My economics background gives me a
+        particular interest in incentive design and emergent behaviour in
+        multi-agent systems.</p>
     </div>
 
-    <div class="section">
-        <h2>Contact</h2>
-        <p><a href="https://github.com/dtcolligan">GitHub</a></p>
+    <div class="links">
+        <h2>Links</h2>
+        <a href="https://github.com/dtcolligan">GitHub</a>
     </div>
 </body>
 </html>
-```
-
