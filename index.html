@@ -7,20 +7,26 @@
     <style>
         body {
             font-family: Georgia, serif;
-            max-width: 680px;
-            margin: 80px auto;
+            max-width: 760px;
+            margin: 72px auto;
             padding: 0 20px;
             color: #1a1a1a;
             line-height: 1.7;
         }
-        h1 { font-size: 2em; margin-bottom: 0.2em; }
-        h2 { margin-top: 2em; font-size: 1.3em; }
-        .subtitle { color: #666; margin-bottom: 2em; }
+        h1 { font-size: 2.2em; margin-bottom: 0.15em; }
+        h2 { margin-top: 2em; font-size: 1.35em; }
+        .subtitle { color: #666; margin-bottom: 1.6em; }
+        .intro { font-size: 1.05em; }
         a { color: #2e8b8b; text-decoration: none; }
         a:hover { text-decoration: underline; }
-        .project { margin-bottom: 1.5em; }
-        .project-title { font-weight: bold; }
-        .project-desc { color: #444; margin-top: 0.2em; }
+        .project {
+            margin-bottom: 1.8em;
+            padding-bottom: 1.2em;
+            border-bottom: 1px solid #eee;
+        }
+        .project-title { font-weight: bold; font-size: 1.05em; margin-bottom: 0.25em; }
+        .project-desc { color: #333; margin: 0.25em 0 0.6em 0; }
+        .project-why { color: #555; margin: 0 0 0.6em 0; }
         .tag {
             display: inline-block;
             font-family: 'SF Mono', 'Fira Code', monospace;
@@ -30,6 +36,7 @@
             padding: 2px 7px;
             border-radius: 3px;
             margin-right: 4px;
+            margin-bottom: 4px;
         }
         .links { margin-top: 2em; }
         .links a { margin-right: 1.5em; }
@@ -37,52 +44,63 @@
 </head>
 <body>
     <h1>Dom Colligan</h1>
-    <p class="subtitle">Economics, Finance & Data Science &mdash; Imperial College London</p>
+    <p class="subtitle">Economics, Finance &amp; Data Science — Imperial College London</p>
 
     <div>
-        <h2>About</h2>
-        <p>First-year undergraduate at Imperial studying EFDS. Interested in
-        machine learning, agentic AI systems, and the intersection of
-        economic thinking and artificial intelligence.</p>
-        <p>Currently building ML implementations from scratch and working towards
-        research in ML engineering and agentic AI.</p>
+        <p class="intro">
+            I’m a first-year Imperial student interested in <strong>machine learning</strong>,
+            <strong>AI systems</strong>, and the intersection of economic thinking and intelligent systems.
+            My work focuses on building technical depth from first principles and turning that into practical systems.
+        </p>
     </div>
 
     <div>
-        <h2>Projects</h2>
-
-        <div class="project">
-            <p class="project-title">
-                <a href="https://github.com/dtcolligan/ml-from-scratch">ML From Scratch</a>
-            </p>
-            <p class="project-desc">Core ML algorithms implemented from first principles in NumPy.
-            Gradient descent, linear regression, and building towards a full autograd engine
-            and neural networks.</p>
-            <span class="tag">Python</span>
-            <span class="tag">NumPy</span>
-            <span class="tag">ML</span>
-        </div>
+        <h2>Selected projects</h2>
 
         <div class="project">
             <p class="project-title">
                 <a href="https://github.com/dtcolligan/garmin_lab">Health Lab</a>
             </p>
-            <p class="project-desc">Health analytics platform with an ML-powered food logger,
-            Garmin wearable data pipeline, and interactive dashboards. Includes a trained
-            portion estimation model and a Flask web interface.</p>
+            <p class="project-desc">
+                A health analytics platform combining Garmin wearable data, ML-powered food logging,
+                SQLite-backed storage, and dashboards into one end-to-end personal system.
+            </p>
+            <p class="project-why">
+                Shows applied ML, data engineering, product thinking, and system design in a real-world use case.
+            </p>
             <span class="tag">Python</span>
             <span class="tag">scikit-learn</span>
             <span class="tag">Flask</span>
+            <span class="tag">SQLite</span>
             <span class="tag">Data Engineering</span>
+        </div>
+
+        <div class="project">
+            <p class="project-title">
+                <a href="https://github.com/dtcolligan/ml-from-scratch">ML From Scratch</a>
+            </p>
+            <p class="project-desc">
+                A structured from-scratch machine learning project covering NumPy fundamentals,
+                gradient descent, linear regression, autograd, and neural network training.
+            </p>
+            <p class="project-why">
+                Shows first-principles understanding of optimisation, backpropagation, and how ML systems work under the hood.
+            </p>
+            <span class="tag">Python</span>
+            <span class="tag">NumPy</span>
+            <span class="tag">PyTorch</span>
+            <span class="tag">ML</span>
+            <span class="tag">From Scratch</span>
         </div>
     </div>
 
     <div>
         <h2>Direction</h2>
-        <p>ML engineering and agentic AI &mdash; systems that plan, use tools, and act
-        autonomously across multi-step tasks. My economics background gives me a
-        particular interest in incentive design and emergent behaviour in
-        multi-agent systems.</p>
+        <p>
+            I’m aiming toward ML Engineering and AI Engineering, especially systems that learn,
+            reason across multiple steps, and interact with tools or real-world data.
+            My economics background shapes how I think about incentives, decision-making, and multi-agent behaviour.
+        </p>
     </div>
 
     <div class="links">
