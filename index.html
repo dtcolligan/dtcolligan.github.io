@@ -4,108 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dom Colligan</title>
+    <meta name="description" content="I design environments for agent evals. Benchmarks, graders, and released trajectories.">
     <style>
         body {
             font-family: Georgia, serif;
-            max-width: 760px;
-            margin: 72px auto;
+            max-width: 720px;
+            margin: 72px auto 96px;
             padding: 0 20px;
             color: #1a1a1a;
             line-height: 1.7;
         }
-        h1 { font-size: 2.2em; margin-bottom: 0.15em; }
-        h2 { margin-top: 2em; font-size: 1.35em; }
-        .subtitle { color: #666; margin-bottom: 1.6em; }
-        .intro { font-size: 1.05em; }
+        h1 { font-size: 2.2em; margin-bottom: 0.1em; }
+        h2 {
+            margin-top: 2.6em;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            color: #888;
+            font-weight: normal;
+        }
         a { color: #2e8b8b; text-decoration: none; }
         a:hover { text-decoration: underline; }
-        .project {
-            margin-bottom: 1.8em;
-            padding-bottom: 1.2em;
-            border-bottom: 1px solid #eee;
+        .tagline { font-size: 1.25em; margin: 0 0 1.5em; }
+        .work { margin-bottom: 2em; }
+        .work-title { font-weight: bold; font-size: 1.05em; margin-bottom: 0.2em; }
+        .work-title a { color: inherit; }
+        .work p { margin: 0.2em 0 0.5em; }
+        .meta { font-size: 0.9em; color: #777; }
+        .now p { margin: 0.4em 0; }
+        .links { margin-top: 3em; font-size: 0.95em; }
+        .links a { margin-right: 1.4em; }
+        code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85em; }
+        @media (prefers-color-scheme: dark) {
+            body { background: #16181a; color: #e4e4e4; }
+            a { color: #5cc9c9; }
+            h2, .meta { color: #8a8a8a; }
         }
-        .project-title { font-weight: bold; font-size: 1.05em; margin-bottom: 0.25em; }
-        .project-desc { color: #333; margin: 0.25em 0 0.6em 0; }
-        .project-why { color: #555; margin: 0 0 0.6em 0; }
-        .tag {
-            display: inline-block;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            font-size: 0.75em;
-            color: #555;
-            background: #f0f0f0;
-            padding: 2px 7px;
-            border-radius: 3px;
-            margin-right: 4px;
-            margin-bottom: 4px;
-        }
-        .links { margin-top: 2em; }
-        .links a { margin-right: 1.5em; }
     </style>
 </head>
 <body>
     <h1>Dom Colligan</h1>
-    <p class="subtitle">Economics, Finance &amp; Data Science — Imperial College London</p>
+    <p class="tagline">I design environments for agent evals.</p>
 
-    <div>
-        <p class="intro">
-            I’m a first-year Imperial student interested in <strong>machine learning</strong>,
-            <strong>AI systems</strong>, and the intersection of economic thinking and intelligent systems.
-            My work focuses on building technical depth from first principles and turning that into practical systems.
-        </p>
-    </div>
+    <p>
+        Economics, Finance and Data Science at Imperial College London. Most of
+        what I care about is designing scorers that do not fall apart when a
+        model optimises against them.
+    </p>
 
-    <div>
-        <h2>Selected projects</h2>
+    <h2>Work</h2>
 
-        <div class="project">
-            <p class="project-title">
-                <a href="https://github.com/dtcolligan/garmin_lab">Health Lab</a>
-            </p>
-            <p class="project-desc">
-                A health analytics platform combining Garmin wearable data, ML-powered food logging,
-                SQLite-backed storage, and dashboards into one end-to-end personal system.
-            </p>
-            <p class="project-why">
-                Shows applied ML, data engineering, product thinking, and system design in a real-world use case.
-            </p>
-            <span class="tag">Python</span>
-            <span class="tag">scikit-learn</span>
-            <span class="tag">Flask</span>
-            <span class="tag">SQLite</span>
-            <span class="tag">Data Engineering</span>
-        </div>
-
-        <div class="project">
-            <p class="project-title">
-                <a href="https://github.com/dtcolligan/ml-from-scratch">ML From Scratch</a>
-            </p>
-            <p class="project-desc">
-                A structured from-scratch machine learning project covering NumPy fundamentals,
-                gradient descent, linear regression, autograd, and neural network training.
-            </p>
-            <p class="project-why">
-                Shows first-principles understanding of optimisation, backpropagation, and how ML systems work under the hood.
-            </p>
-            <span class="tag">Python</span>
-            <span class="tag">NumPy</span>
-            <span class="tag">PyTorch</span>
-            <span class="tag">ML</span>
-            <span class="tag">From Scratch</span>
-        </div>
-    </div>
-
-    <div>
-        <h2>Direction</h2>
+    <div class="work">
+        <div class="work-title">Told or Enforced</div>
         <p>
-            I’m aiming toward ML Engineering and AI Engineering, especially systems that learn,
-            reason across multiple steps, and interact with tools or real-world data.
-            My economics background shapes how I think about incentives, decision-making, and multi-agent behaviour.
+            A pre-registered study of when telling an agent the rules substitutes
+            for enforcing them. Eight models, four open-weight families, a
+            stronger and a weaker sibling in each. Telling raises the first-action
+            safe rate in every family, but enforcement still adds on top of
+            telling, and it is nearly all of the barrier in the weak families.
+        </p>
+        <p class="meta">First author. Preprint coming.</p>
+    </div>
+
+    <div class="work">
+        <div class="work-title">
+            <a href="https://github.com/dtcolligan/health_agent_infra/tree/main/benchmark">GovernedAgentBench</a>
+        </div>
+        <p>
+            39 tasks over an agent harness, with a deterministic offline grader
+            and every trajectory released. Built to separate two things that
+            usually get measured together: what the model was told, and what the
+            runtime would actually let it do.
+        </p>
+        <p class="meta">Public, MIT licensed. Tag <code>gab-runtime-1.0.1</code>.</p>
+    </div>
+
+    <div class="work">
+        <div class="work-title">
+            <a href="https://github.com/dtcolligan/ml-from-scratch">ml-from-scratch</a>
+        </div>
+        <p>
+            Core ML implemented in NumPy from first principles, working up from
+            gradient descent toward autograd and networks.
         </p>
     </div>
 
-    <div class="links">
-        <h2>Links</h2>
-        <a href="https://github.com/dtcolligan">GitHub</a>
+    <h2>Now</h2>
+    <div class="now">
+        <p>
+            <strong>July 2026.</strong> AI and Data Science Intern at Let Tech
+            Solutions, where I own an evaluation for a production agent workflow.
+            Research assistant at the IDEA Lab, Imperial.
+        </p>
+        <p>Reading toward RL post-training.</p>
     </div>
+
+    <p class="links">
+        <a href="https://github.com/dtcolligan">GitHub</a>
+        <a href="https://x.com/HANDLE_TODO">X</a>
+        <a href="mailto:dtcolligan@gmail.com">Email</a>
+    </p>
 </body>
 </html>
