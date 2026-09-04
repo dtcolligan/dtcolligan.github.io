@@ -185,7 +185,7 @@ trained checkpoint on the eval split, 5% level, must hold on seen. Set against s
 200, applied to step 20. Stretch: match or beat the untrained 8B.</li>
 <li><strong>Compute:</strong> 2× H100 80GB on Prime Intellect (Lambda), $8.38/h,
 trainer on one card and vLLM inference on the other. Ceiling $150 and 24 h.</li>
-<li><strong>Config:</strong> environment tag baseline-v2; <code>configs/run1.toml</code>.
+<li><strong>Config:</strong> environment tag baseline-v2; <code>training/configs/run1.toml</code>.
 The committed file is the end state: the in-flight cap of 112 and the 480/min
 dispatch were both added during the run (§6), so it is not the config step 20
 trained under.</li>
