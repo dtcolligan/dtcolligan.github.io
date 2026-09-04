@@ -1,108 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dom Colligan</title>
-    <meta name="description" content="I design environments for agent evals. Benchmarks, graders, and released trajectories.">
-    <style>
-        body {
-            font-family: Georgia, serif;
-            max-width: 720px;
-            margin: 72px auto 96px;
-            padding: 0 20px;
-            color: #1a1a1a;
-            line-height: 1.7;
-        }
-        h1 { font-size: 2.2em; margin-bottom: 0.1em; }
-        h2 {
-            margin-top: 2.6em;
-            font-size: 0.85em;
-            text-transform: uppercase;
-            letter-spacing: 0.09em;
-            color: #888;
-            font-weight: normal;
-        }
-        a { color: #2e8b8b; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        .tagline { font-size: 1.25em; margin: 0 0 1.5em; }
-        .work { margin-bottom: 2em; }
-        .work-title { font-weight: bold; font-size: 1.05em; margin-bottom: 0.2em; }
-        .work-title a { color: inherit; }
-        .work p { margin: 0.2em 0 0.5em; }
-        .meta { font-size: 0.9em; color: #777; }
-        .now p { margin: 0.4em 0; }
-        .links { margin-top: 3em; font-size: 0.95em; }
-        .links a { margin-right: 1.4em; }
-        code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85em; }
-        @media (prefers-color-scheme: dark) {
-            body { background: #16181a; color: #e4e4e4; }
-            a { color: #5cc9c9; }
-            h2, .meta { color: #8a8a8a; }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dom Colligan</title>
+<meta name="description" content="I like evaluations, data and post-training.">
+<link rel="canonical" href="https://dtcolligan.github.io/">
+<meta property="og:title" content="Dom Colligan">
+<meta property="og:description" content="I like evaluations, data and post-training.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dtcolligan.github.io/">
+<link rel="alternate" type="application/atom+xml" title="Dom Colligan — Atom Feed" href="/feeds/atom.xml">
+<link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
-    <h1>Dom Colligan</h1>
-    <p class="tagline">I design environments for agent evals.</p>
+<nav class="navbar" aria-label="Primary navigation">
+  <span></span>
+  <div class="nav-links">
+    <a href="/" class="nav-link active" aria-current="page">Home</a>
+    <a href="/posts/" class="nav-link">Posts</a>
+    <a href="https://github.com/dtcolligan" class="nav-link">GitHub</a>
+  </div>
+</nav>
 
+<main class="container">
+<h1>Dom Colligan</h1>
+<p class="tagline">I like evaluations, data and post-training.</p>
+
+<p>
+    Economics, Finance and Data Science at Imperial College London.
+</p>
+
+<h2>Work</h2>
+
+<div class="work">
+    <div class="work-title"><a href="/posts/suitesmith/">Suitesmith</a></div>
     <p>
-        Economics, Finance and Data Science at Imperial College London. Most of
-        what I care about is designing scorers that do not fall apart when a
-        model optimises against them.
+        An RL environment which trains a model to write test suites for
+        functions which operate on structured data. Post-trained Qwen3.5-4B on it with
+        GRPO: 20 steps took it from 0.41 to 0.88 on the held-out split, level
+        with an untrained 8B on the families it trained on. I evaluated the
+        checkpoint twice and the two runs disagree by 0.13 on the unseen
+        family, which is written up rather than tidied away.
     </p>
-
-    <h2>Work</h2>
-
-    <div class="work">
-        <div class="work-title">Told or Enforced</div>
-        <p>
-            A pre-registered study of when telling an agent the rules substitutes
-            for enforcing them. Eight models, four open-weight families, a
-            stronger and a weaker sibling in each. Telling raises the first-action
-            safe rate in every family, but enforcement still adds on top of
-            telling, and it is nearly all of the barrier in the weak families.
-        </p>
-        <p class="meta">First author. Preprint coming.</p>
-    </div>
-
-    <div class="work">
-        <div class="work-title">
-            <a href="https://github.com/dtcolligan/governed-agent-bench">GovernedAgentBench</a>
-        </div>
-        <p>
-            39 tasks over an agent harness, with a deterministic offline grader
-            and every trajectory released. Built to separate two things that
-            usually get measured together: what the model was told, and what the
-            runtime would actually let it do.
-        </p>
-        <p class="meta">Public, MIT licensed. Tag <code>gab-runtime-1.0.1</code>.</p>
-    </div>
-
-    <div class="work">
-        <div class="work-title">
-            <a href="https://github.com/dtcolligan/ml-from-scratch">ml-from-scratch</a>
-        </div>
-        <p>
-            Core ML implemented in NumPy from first principles, working up from
-            gradient descent toward autograd and networks.
-        </p>
-    </div>
-
-    <h2>Now</h2>
-    <div class="now">
-        <p>
-            <strong>July 2026.</strong> AI and Data Science Intern at Let Tech
-            Solutions, where I own an evaluation for a production agent workflow.
-            Research assistant at the IDEA Lab, Imperial.
-        </p>
-        <p>Reading toward RL post-training.</p>
-    </div>
-
-    <p class="links">
-        <a href="https://github.com/dtcolligan">GitHub</a>
-        <a href="https://x.com/DominicColligan">X</a>
-        <a href="mailto:dtcolligan@gmail.com">Email</a>
+    <p class="meta">
+        <a href="/posts/suitesmith/">Write-up</a> ·
+        <a href="https://github.com/dtcolligan/suitesmith">code</a> ·
+        <a href="https://huggingface.co/dtcolligan/suitesmith-qwen3.5-4b-run1-step20">weights</a>
     </p>
+</div>
+
+<div class="work">
+    <div class="work-title">Told or Enforced</div>
+    <p>
+        A pre-registered study of when telling an agent the rules substitutes
+        for enforcing them. Eight models, four open-weight families, a
+        stronger and a weaker sibling in each. Telling raises the first-action
+        safe rate in every family, but enforcement still adds on top of
+        telling, and it is nearly all of the barrier in the weak families.
+    </p>
+    <p class="meta">First author. Preprint coming.</p>
+</div>
+
+<div class="work">
+    <div class="work-title">
+        <a href="https://github.com/dtcolligan/governed-agent-bench">GovernedAgentBench</a>
+    </div>
+    <p>
+        39 tasks over an agent harness, with a deterministic offline grader
+        and every trajectory released. Built to separate two things that
+        usually get measured together: what the model was told, and what the
+        runtime would actually let it do.
+    </p>
+    <p class="meta">Public, MIT licensed. Tag <code>gab-runtime-1.0.1</code>.</p>
+</div>
+
+<div class="work">
+    <div class="work-title">
+        <a href="https://github.com/dtcolligan/ml-from-scratch">ml-from-scratch</a>
+    </div>
+    <p>
+        Core ML implemented in pure Python from first principles, working up
+        from gradient descent toward autograd and networks.
+    </p>
+</div>
+
+<h2>Now</h2>
+<div class="now">
+    <p>
+        <strong>July 2026.</strong> AI and Data Science Intern at Let Tech
+        Solutions, where I own an evaluation for a production agent workflow.
+        Research assistant at the IDEA Lab, Imperial.
+    </p>
+</div>
+
+<p class="links">
+    <a href="https://github.com/dtcolligan">GitHub</a>
+    <a href="https://x.com/DominicColligan">X</a>
+    <a href="mailto:dtcolligan@gmail.com">Email</a>
+</p>
+</main>
+
+<footer class="site-footer">
+  <span>Dom Colligan</span>
+  <span>
+    <a href="/feeds/atom.xml">RSS</a> ·
+    <a href="https://github.com/dtcolligan">GitHub</a> ·
+    <a href="https://x.com/DominicColligan">X</a> ·
+    <a href="mailto:dtcolligan@gmail.com">Email</a>
+  </span>
+</footer>
 </body>
 </html>
