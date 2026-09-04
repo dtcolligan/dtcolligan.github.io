@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GDPval: a review</title>
+<meta name="description" content="A review of OpenAI's GDPval. The occupation selection is careful and the cost analysis is the best idea in the paper, but the rubrics were never run against themselves: tracing the gold taskset on HuggingFace turned up 4 bugs in 15 tasks.">
+<link rel="canonical" href="https://dtcolligan.com/posts/gdpval/">
+<meta property="og:title" content="GDPval: a review">
+<meta property="og:description" content="A review of OpenAI's GDPval. The occupation selection is careful and the cost analysis is the best idea in the paper, but the rubrics were never run against themselves: tracing the gold taskset on HuggingFace turned up 4 bugs in 15 tasks.">
+<meta property="og:site_name" content="dtcolligan.com">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://dtcolligan.com/posts/gdpval/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GDPval: a review">
+<meta name="twitter:description" content="A review of OpenAI's GDPval. The occupation selection is careful and the cost analysis is the best idea in the paper, but the rubrics were never run against themselves: tracing the gold taskset on HuggingFace turned up 4 bugs in 15 tasks.">
+<link rel="alternate" type="application/atom+xml" title="Dom Colligan — Atom Feed" href="/feeds/atom.xml">
+<link rel="stylesheet" href="/assets/style.css">
+
+</head>
+<body>
+<nav class="navbar" aria-label="Primary navigation">
+  <a href="/" class="nav-brand">Dom Colligan</a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Home</a>
+    <a href="/posts/" class="nav-link active" aria-current="page">Posts</a>
+    <a href="https://github.com/dtcolligan" class="nav-link">GitHub</a>
+  </div>
+</nav>
+<main id="main-content" class="container">
+<h1>GDPval: a review</h1>
+<p class="post-meta">September 4, 2026 · 4 min read</p>
+
+<h2 id="benchmark">1. The benchmark<a class="anchor" href="#benchmark" aria-label="Link to this section">#</a></h2>
+
+<p>GDPval measures AI's capability on real world economically valuable tasks. It
+covers the top 9 sectors contributing to U.S. GDP, with at least 30 tasks per
+occupation in the full set. They use human experts to author the tasks, and their
+primary metric of evaluation is head-to-head human expert comparison. They
+open-source a 220-task subset of the benchmark, and host an experimental automated
+grader alongside it.</p>
+
+<h2 id="taskset">2. Taskset<a class="anchor" href="#taskset" aria-label="Link to this section">#</a></h2>
+
+<p>They take every sector (9) contributing over 5% of US GDP, measured as value
+added, within those they take the highest earning knowledge work occupations, and
+keep an occupation only if more than 60% of its <code>O*NET</code> tasks, weighted
+by relevance and importance and frequency, are classified as digital. That
+classification is done by GPT-4o. Experts are then brought in to author realistic
+tasks against the surviving list.</p>
+
+<p>Using experts to author the tasks is great, and so is building the list off
+documented occupation and industry data rather than inventing a taxonomy.</p>
+
+<p>However there are construct validity issues. Value added counts capital income +
+imputed rents, not income earned, therefore the weighting is sensitive and this
+analytical choice is not justified (Real Estate comes out top at 13.8% of GDP while
+its five occupations earn about $62B. Professional, Scientific and Technical
+Services sits at 8.1% and earns $742B).</p>
+
+<p>The occupation boundary is drawn by a GPT-4o classifier whose item level accuracy
+is never reported, at a 0.60 threshold that is never justified.</p>
+
+<h2 id="grader">3. Grader<a class="anchor" href="#grader" aria-label="Link to this section">#</a></h2>
+
+<p>Grading is blinded expert pairwise comparison against the human deliverable, with
+three completions per model and three graders per task. They also host an
+experimental automated grader, which they do not treat as a replacement.</p>
+
+<p>Open sourcing the gold taskset is great, and expert pairwise comparison is high
+quality grading. It is slow and expensive and they paid for it.</p>
+
+<p>Tracing the taskset on HuggingFace I found 4 bugs across 15 tasks: a rubric whose
+total contradicts its own arithmetic, a rubric checking different spreadsheet
+columns than the prompt specifies so the expert deliverable fails its own rubric, a
+prompt and rubric anonymising the same party differently, and an expert chart
+plotting different figures than the rubric asks for. Every quality check they run is
+done by reading, none by running the rubric.</p>
+
+<p>The reward design is inconsistent, most criteria are worth 1 point each whatever
+they are, and a judge only +5 for overall formatting and style appears in 9 of 10
+tasks and is usually the largest single item. Some authors did encode value in the
+weights, +5 for conclusions and +4 for intermediate steps, so it can be done. Also,
+~90% of the rubric could have been executed in code.</p>
+
+<h2 id="analysis">4. Analysis<a class="anchor" href="#analysis" aria-label="Link to this section">#</a></h2>
+
+<p>Their analysis attempts to explain what the model performance means economically.
+Three scenarios: a naive ratio of model cost against human cost, and two that account
+for a professional reviewing the output and redoing it themselves when it falls below
+their bar. For GPT-5 the naive cost improvement is 474x. Once you include review and
+redo it is 1.18x.</p>
+
+<figure>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Model</th><th>Win rate</th><th>Naive</th><th>Try 1x</th><th>Try nx</th></tr></thead>
+<tbody>
+<tr><td>gpt-4o</td><td>12.5%</td><td>5172x</td><td>0.90x</td><td>0.53x</td></tr>
+<tr><td>o4-mini</td><td>29.1%</td><td>1265x</td><td>1.06x</td><td>1.22x</td></tr>
+<tr><td>o3</td><td>35.2%</td><td>480x</td><td>1.13x</td><td>1.47x</td></tr>
+<tr><td>gpt-5</td><td>39.0%</td><td>474x</td><td>1.18x</td><td>1.63x</td></tr>
+</tbody>
+</table>
+</div>
+<figcaption>Cost improvement over the human baseline, from the paper's own table.
+<code>Naive</code> is model cost against human cost. <code>Try 1x</code> and
+<code>Try nx</code> add the professional's time reviewing the output and redoing it
+when it falls below their bar. For gpt-4o the realistic figures are below 1, meaning
+using the model leaves you worse off than not using it.</figcaption>
+</figure>
+
+<p>This is brilliant, the point of a benchmark like this is the economic implication
+of model performance, and this is the section that actually gets at it.</p>
+
+<p>IMO if they wanted the full picture of value they should have factored in the cost
+of failure. They say themselves that the analysis does not capture the cost of
+catastrophic mistakes. GPT-5 fails 61% of the time and roughly 3% of those failures
+are rated catastrophic, so the saving only holds if nothing expensive goes wrong. For
+a lawyer or an auditor that is not a safe assumption. The cost analysis also only
+covers OpenAI models.</p>
+
+<h2 id="conclusions">5. Conclusions<a class="anchor" href="#conclusions" aria-label="Link to this section">#</a></h2>
+
+<p>GDPval is a good paper + benchmark in an area of evals that has not had enough
+attention. I think the expert authored taskset is brilliant, and pricing model
+performance economically is the right idea. However both the grader + the analysis
+can be improved in terms of efficiency, validity and rigor.</p>
+
+<p>I would definitely recommend reading it.</p>
+
+<hr>
+
+<p class="post-meta" style="margin-bottom:0">
+  <a href="https://arxiv.org/abs/2510.04374">arXiv:2510.04374</a>
+  · <a href="https://huggingface.co/datasets/openai/gdpval">gold taskset on Hugging Face</a>
+</p>
+<div class="post-endmark">❦</div>
+</main>
+<footer class="site-footer">
+  <span>Dom Colligan</span>
+  <span>
+    <a href="https://github.com/dtcolligan">GitHub</a> ·
+    <a href="https://x.com/DominicColligan">X</a> ·
+    <a href="mailto:dtcolligan@gmail.com">Email</a>
+  </span>
+</footer>
+</body>
+</html>
