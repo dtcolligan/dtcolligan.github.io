@@ -24,13 +24,6 @@
 <h1>Feed</h1>
 <p class="post-meta"><xsl:value-of select="atom:feed/atom:subtitle"/></p>
 
-<p>This page is a web feed. Paste the address below into a feed reader to get new
-posts as they go up, or just <a href="/posts/">read the posts</a>.</p>
-
-<p><code>https://dtcolligan.com/feeds/atom.xml</code></p>
-
-<hr/>
-
 <ul class="post-list">
   <xsl:for-each select="atom:feed/atom:entry">
   <li>
