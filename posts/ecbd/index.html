@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ECBD: a review</title>
+<meta name="description" content="A review of Evidence-Centered Benchmark Design. Its definition of validity is right and the describe/justify/support split is the contribution, but the framing is capability-only and pre-agent. I used it to formalise a benchmark on professional work.">
+<link rel="canonical" href="https://dtcolligan.com/posts/ecbd/">
+<meta property="og:title" content="ECBD: a review">
+<meta property="og:description" content="A review of Evidence-Centered Benchmark Design. Its definition of validity is right and the describe/justify/support split is the contribution, but the framing is capability-only and pre-agent. I used it to formalise a benchmark on professional work.">
+<meta property="og:site_name" content="dtcolligan.com">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://dtcolligan.com/posts/ecbd/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ECBD: a review">
+<meta name="twitter:description" content="A review of Evidence-Centered Benchmark Design. Its definition of validity is right and the describe/justify/support split is the contribution, but the framing is capability-only and pre-agent. I used it to formalise a benchmark on professional work.">
+<link rel="alternate" type="application/atom+xml" title="Dom Colligan — Atom Feed" href="/feeds/atom.xml">
+<link rel="stylesheet" href="/assets/style.css">
+
+</head>
+<body>
+<nav class="navbar" aria-label="Primary navigation">
+  <a href="/" class="nav-brand">Dom Colligan</a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Home</a>
+    <a href="/posts/" class="nav-link active" aria-current="page">Posts</a>
+    <a href="https://github.com/dtcolligan" class="nav-link">GitHub</a>
+  </div>
+</nav>
+<main id="main-content" class="container">
+<h1>ECBD: a review</h1>
+<p class="post-meta">September 5, 2026 · 4 min read</p>
+
+<h2 id="paper">1. The paper<a class="anchor" href="#paper" aria-label="Link to this section">#</a></h2>
+
+<p>ECBD is a framework for designing and analysing benchmarks. The authors take a
+framework from educational testing, Evidence-Centered Design (Mislevy et al.
+2003), and map it to benchmark design. In educational testing the question is
+whether an exam result tells you something real about a student's ability. They
+argue benchmarking is the same question about models, and that NLP has no
+systematic way of asking it.</p>
+
+<p>They define benchmarking as the process of gathering capability evidence from
+objects of evaluation about whether, or to what degree, they have some
+capabilities of interest.</p>
+
+<p>I do not agree with that definition. It is capability only. Whether a system
+<em>will</em> do something by default, rather than whether it <em>can</em>, does not appear
+anywhere in the framework, and for anything safety-adjacent that is the whole
+question. It also has no notion of an environment. The object of evaluation
+takes an input and produces an output, and the item pool is something you
+document rather than something you have to justify sampling from.</p>
+
+<p>Their definition of validity is the degree to which the accumulated evidence
+supports the intended interpretation of the results for the intended use. That
+one I think is right, and it is the load-bearing sentence in the paper. Validity
+is not a property of a benchmark on its own. It only exists relative to a
+claimed use.</p>
+
+<h2 id="framework">2. The framework<a class="anchor" href="#framework" aria-label="Link to this section">#</a></h2>
+
+<p>The framework splits benchmark construction into intended use, which comes
+first, and then five modules. Intended use is not a module. They are explicit
+that it has to be settled before anything else, because if you have not said who
+is being evaluated, who the users are and how results should be read, then the
+design choices get made because they are convenient rather than because they
+serve a purpose.</p>
+
+<div class="tablewrap">
+<table>
+<thead><tr><th></th><th>Role</th></tr></thead>
+<tbody>
+<tr><td>Intended use (precedes the modules)</td><td>who is evaluated, who the users are, how results should be interpreted</td></tr>
+<tr><td>Capability</td><td>connects the benchmark to its intended use</td></tr>
+<tr><td>Content</td><td>each item elicits evidence about the capabilities it targets</td></tr>
+<tr><td>Adaptation</td><td>adaptation suits all objects of evaluation and disadvantages none</td></tr>
+<tr><td>Assembly</td><td>the selected item set elicits sufficient evidence</td></tr>
+<tr><td>Evidence</td><td>extraction captures the targeted capability, accumulation captures the capability of interest</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>For each module you have to <strong>describe</strong>, <strong>justify</strong> and <strong>support</strong>. Describe
+is what you decided. Justify is why, which forms a hypothesis that the decision
+lets the module do its job. Support is validity evidence for that hypothesis,
+either theoretical or empirical.</p>
+
+<h2 id="worksheet">3. The worksheet<a class="anchor" href="#worksheet" aria-label="Link to this section">#</a></h2>
+
+<p>They convert the framework into a worksheet of 20 questions, in Appendix A. They
+completed it for their three case studies and put those at
+<a href="https://github.com/isle-dev/ECBD">github.com/isle-dev/ECBD</a>.</p>
+
+<p>They caveat it:</p>
+
+<ul>
+<li>The questions are not exhaustive, and they expect practitioners will identify
+additional questions relevant to their own benchmark.</li>
+<li>Validity is not the only thing that matters. They name provenance, privacy and
+reliability as things a benchmark should be assessed on that ECBD does not
+cover.</li>
+<li>They analysed three benchmarks, and only from the papers introducing them, not
+the websites or code repositories.</li>
+</ul>
+
+<h2 id="findings">4. Their findings<a class="anchor" href="#findings" aria-label="Link to this section">#</a></h2>
+
+<p>They ran the worksheet on BoolQ, SuperGLUE and HELM. Two to three authors per
+benchmark, one reading the paper then re-reading it while filling the worksheet
+in, and at least two others checking the completed sheet.</p>
+
+<p><strong>Intended use is vaguely specified.</strong> They found little description of who the
+intended users are or how they should interpret the results.</p>
+
+<p><strong>Complex capabilities get decomposed into subcapabilities with little elaboration.</strong></p>
+
+<p><strong>Abstractions are not separated from the metrics used to measure them.</strong></p>
+
+<p><strong>Re-purposed data is not connected / adapted properly to the capability.</strong></p>
+
+<p><strong>Evidence is often unjustified, or justified by precedent (however even new metrics go unjustified)</strong></p>
+
+<p>The overarching finding is the one that matters: benchmarks describe their
+design choices, justify them less often, and rarely gather validity evidence at all.</p>
+
+<h2 id="thoughts">5. My thoughts<a class="anchor" href="#thoughts" aria-label="Link to this section">#</a></h2>
+
+<p>I used this framework to formalise a benchmark on professional work. It helped
+with rigor in construction, and with the interpretability of the benchmark. Justifying my capability
+choices against the intended use exposed that I had never argued why those capabilities and not others, which is a real gap and I would not have found it by reading my own draft.</p>
+
+<p>However ECBD is pre-agent and general. It is from June 2024 and the object of
+evaluation it imagines is a language model that takes text in and produces text
+out. It was not robust, specifically in my experience, to harness-related adaptation items.</p>
+
+<p>So I think ECBD should be seen as a reference framework which needs tweaking and
+adapting for each use case, rather than something you apply as-is. The authors
+say this themselves in their limitations, that the questions are not exhaustive
+and that practitioners will find additional ones specific to their own
+benchmark.</p>
+
+<p>This is a part of benchmarking that industry currently underappreciates, formal frameworks pre-construction. The
+gap is not documentation, HELM documents heavily. The gap is justification and
+validity evidence, and ECBD is the best starting point I've read for closing
+it.</p>
+
+<p>Worth reading.</p>
+
+<hr>
+
+<p class="post-meta" style="margin-bottom:0">
+  <a href="https://arxiv.org/abs/2406.08723">arXiv:2406.08723</a>
+  · <a href="https://github.com/isle-dev/ECBD">worksheets on GitHub</a>
+</p>
+<div class="post-endmark">❦</div>
+</main>
+<footer class="site-footer">
+  <span>Dom Colligan</span>
+  <span>
+    <a href="https://github.com/dtcolligan">GitHub</a> ·
+    <a href="https://x.com/DominicColligan">X</a> ·
+    <a href="mailto:dtcolligan@gmail.com">Email</a>
+  </span>
+</footer>
+</body>
+</html>

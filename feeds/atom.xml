@@ -6,8 +6,15 @@
   <link href="https://dtcolligan.com/feeds/atom.xml" rel="self"/>
   <link href="https://dtcolligan.com/"/>
   <id>https://dtcolligan.com/</id>
-  <updated>2026-09-04T00:00:00Z</updated>
+  <updated>2026-09-05T00:00:00Z</updated>
   <author><name>Dom Colligan</name></author>
+  <entry>
+    <title>ECBD: a review</title>
+    <link href="https://dtcolligan.com/posts/ecbd/"/>
+    <id>https://dtcolligan.com/posts/ecbd/</id>
+    <updated>2026-09-05T00:00:00Z</updated>
+    <summary>A review of Evidence-Centered Benchmark Design. Its definition of validity is right and the describe/justify/support split is the contribution, but the framing is capability-only and pre-agent. I used it to formalise a benchmark on professional work.</summary>
+  </entry>
   <entry>
     <title>GDPval: a review</title>
     <link href="https://dtcolligan.com/posts/gdpval/"/>
