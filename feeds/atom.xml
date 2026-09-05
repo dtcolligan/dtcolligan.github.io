@@ -13,14 +13,14 @@
     <link href="https://dtcolligan.com/posts/ecbd/"/>
     <id>https://dtcolligan.com/posts/ecbd/</id>
     <updated>2026-09-05T00:00:00Z</updated>
-    <summary>A review of Evidence-Centered Benchmark Design. Its definition of validity is right and the describe/justify/support split is the contribution, but the framing is capability-only and pre-agent. I used it to formalise a benchmark on professional work.</summary>
+    <summary>A review of ECBD, a framework for constructing benchmarks taken from educational testing. I used it to formalise a benchmark on professional work.</summary>
   </entry>
   <entry>
     <title>GDPval: a review</title>
     <link href="https://dtcolligan.com/posts/gdpval/"/>
     <id>https://dtcolligan.com/posts/gdpval/</id>
     <updated>2026-09-04T00:00:00Z</updated>
-    <summary>A review of OpenAI's GDPval. The occupation selection is careful and the cost analysis is the best idea in the paper, but the rubrics were never run against themselves: tracing the gold taskset on HuggingFace turned up 4 bugs in 15 tasks.</summary>
+    <summary>A review of OpenAI's GDPval, an expert-authored benchmark on economically valuable work. Running the rubrics turned up 4 bugs in 15 tasks.</summary>
   </entry>
   <entry>
     <title>Suitesmith: environment + training run</title>
