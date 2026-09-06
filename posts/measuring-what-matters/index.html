@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Measuring what Matters: a review</title>
+<meta name="description" content="A review of Bean et al.&#x27;s construct validity checklist, built from 445 LLM benchmarks. I ran all 28 items on GDPval and it came out 11 pass, 9 partial, 4 fail.">
+<link rel="canonical" href="https://dtcolligan.com/posts/measuring-what-matters/">
+<meta property="og:title" content="Measuring what Matters: a review">
+<meta property="og:description" content="A review of Bean et al.&#x27;s construct validity checklist, built from 445 LLM benchmarks. I ran all 28 items on GDPval and it came out 11 pass, 9 partial, 4 fail.">
+<meta property="og:site_name" content="dtcolligan.com">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://dtcolligan.com/posts/measuring-what-matters/">
+<meta property="og:image" content="https://dtcolligan.com/assets/cards/card-measuring-what-matters.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Measuring what Matters: a review — dtcolligan.com">
+<meta name="twitter:image" content="https://dtcolligan.com/assets/cards/sq-measuring-what-matters.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Measuring what Matters: a review">
+<meta name="twitter:description" content="A review of Bean et al.&#x27;s construct validity checklist, built from 445 LLM benchmarks. I ran all 28 items on GDPval and it came out 11 pass, 9 partial, 4 fail.">
+<link rel="alternate" type="application/atom+xml" title="Dom Colligan — Atom Feed" href="/feeds/atom.xml">
+<link rel="stylesheet" href="/assets/style.css?v=tmalign1">
+
+</head>
+<body>
+<nav class="navbar" aria-label="Primary navigation">
+  <a href="/" class="nav-brand">Dom Colligan</a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Home</a>
+    <a href="/posts/" class="nav-link active" aria-current="page">Posts</a>
+    <a href="https://github.com/dtcolligan" class="nav-link">GitHub</a>
+  </div>
+</nav>
+<main id="main-content" class="container post">
+<h1>Measuring what Matters: a review</h1>
+<p class="post-meta">September 6, 2026 · 4 min read</p>
+
+<h2 id="paper">1. The paper<a class="anchor" href="#paper" aria-label="Link to this section">#</a></h2>
+
+<p>Bean et al. review 445 LLM benchmarks for construct validity, with 29 expert
+reviewers. Construct validity is the degree to which a benchmark score is
+evidence for the claim being made about the phenomenon. They break a benchmark
+into phenomenon, task, metric and claim, and validity breaks at the joints
+between them.</p>
+
+<p>They got to 445 from 46,114 papers at ICML, ICLR, NeurIPS and ACL venues, via a
+keyword filter, a GPT-4o-mini screen and expert review. Each benchmark was coded
+on a 30-field codebook.</p>
+
+<p>They also measured their own reviewers. On a 46 paper double-review the mean
+agreement was BPK 0.524, and on the most judgment heavy field, task ecology, it
+was 0.146. A paper about measurement reporting the noise in its own
+measurement, which is more than most benchmarks do.</p>
+
+<h2 id="checklist">2. The checklist<a class="anchor" href="#checklist" aria-label="Link to this section">#</a></h2>
+
+<p>They turn the review into 8 recommendations and a 28 item checklist, Appendix
+A. The eight, quoted:</p>
+
+<ul>
+<li>Define the phenomenon</li>
+<li>Measure the phenomenon and only the phenomenon</li>
+<li>Construct a representative dataset for the task</li>
+<li>Acknowledge limitations of reusing datasets</li>
+<li>Prepare for contamination</li>
+<li>Use statistical methods to compare models</li>
+<li>Conduct an error analysis</li>
+<li>Justify construct validity</li>
+</ul>
+
+<h2 id="findings">3. Findings<a class="anchor" href="#findings" aria-label="Link to this section">#</a></h2>
+
+<ul>
+<li>47.8% of benchmarks measure a phenomenon that is contested or undefined.</li>
+<li>61.2% measure a composite phenomenon, and most of those still report a single
+number.</li>
+<li>27.0% used convenience sampling at least partly, 12.3% exclusively. 32.3% use
+any real world tasks.</li>
+<li>Exact match is the metric in 81.3%. LLM as judge 17.1%. Human ratings 13.0%.</li>
+<li>16.0% do any statistical testing.</li>
+<li>53.4% present any evidence for construct validity. 32.4% include a human
+baseline.</li>
+</ul>
+
+<p>Clearly, existing benchmarks are flawed in terms of construct validity, and this serves as evidence for a call for greater rigor in evaluations.</p>
+
+<h2 id="thoughts">4. My thoughts<a class="anchor" href="#thoughts" aria-label="Link to this section">#</a></h2>
+
+<p>I ran the full 28 item checklist on GDPval, which postdates their corpus. Two
+raters, disagreements recorded rather than merged, checkable items separated
+from judgment calls. GDPval came out at 11 pass, 9 partial, 4 fail, 4 not
+applicable. It sits near the top of their corpus on most columns.</p>
+
+<p>However, the checklist missed a key criticism of GDPval in that the rubrics were flawed when executed. So I think it can be adapted on a case by case basis for auditing benchmarks like GDPval, the structure
+holds but the items need extending for the benchmark in front of you.</p>
+
+<p>Their definition of contamination is not robust. For professional
+work, a model having seen the source material in training is not
+contamination, it is the prerequisite. For example, an accountant is supposed to have read
+the standards. What would be contamination is having seen this specific case
+with its answer. GDPval fails 5.1 and 5.3, but for this class of benchmark the
+items apply awkwardly, so the definition needs to be tweaked to adapt to
+these cases.</p>
+
+<p>Some items in their codebook are heavily contested between reviewers. Face
+validity has a kappa of 0.927, but phenomenon defined is 0.073, sampling method
+0.122 and task ecology 0.146. Two experts reading the same paper disagree on
+whether the phenomenon is defined at all. Maybe benchmark construction is
+inherently ambiguous for non-trivial work, and the checklist should be read with
+that in mind, a pass on a 0.07 item is one person's opinion.</p>
+
+<p>The validity audit is good, but validity is orthogonal to other dimensions such
+as reliability and reproducibility, which are also necessary for quality
+evaluations. Exact match is maximally reliable and contributes nothing to
+validity, and a benchmark can be the other way round.</p>
+
+<p>Saturation is often treated as a failure. In terms of validity, reproducibility
+and contamination it is not, assuming the benchmark and the experiment are of
+high quality. It is only a loss of discriminative power. Lots of people discard
+the results of saturated benchmarks and only care about the ones that still
+separate models, which IMO is wrong, a saturated high quality benchmark is
+telling you the capability is there.</p>
+
+<p>I also wonder how it holds up on industry benchmarks compared to academic ones.
+The corpus is conference papers to 2024, and only 33 of 453 are industry
+authored. One data point, but it suggests the failure modes might be different, and the checklist was built from
+the academic ones.</p>
+
+<p>Worth reading, and worth using to audit benchmarks.</p>
+
+<hr>
+
+<p class="post-meta" style="margin-bottom:0">
+  <a href="https://arxiv.org/abs/2511.04703">arXiv:2511.04703</a>
+</p>
+<div class="post-endmark">❦</div>
+</main>
+<footer class="site-footer">
+  <span>Dom Colligan</span>
+  <span>
+    <a href="https://github.com/dtcolligan">GitHub</a> ·
+    <a href="https://x.com/DominicColligan">X</a> ·
+    <a href="mailto:dtcolligan@gmail.com">Email</a>
+  </span>
+</footer>
+</body>
+</html>

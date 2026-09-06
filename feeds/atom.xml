@@ -10,8 +10,8 @@
   <author><name>Dom Colligan</name></author>
   <entry>
     <title>Measuring what Matters: a review</title>
-    <link href="https://dtcolligan.com/posts/bean/"/>
-    <id>https://dtcolligan.com/posts/bean/</id>
+    <link href="https://dtcolligan.com/posts/measuring-what-matters/"/>
+    <id>https://dtcolligan.com/posts/measuring-what-matters/</id>
     <updated>2026-09-06T00:00:00Z</updated>
     <summary>A review of Bean et al.&#x27;s construct validity checklist, built from 445 LLM benchmarks. I ran all 28 items on GDPval and it came out 11 pass, 9 partial, 4 fail.</summary>
   </entry>
