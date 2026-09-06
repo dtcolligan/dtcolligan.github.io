@@ -9,7 +9,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title><xsl:value-of select="atom:feed/atom:title"/> — Feed</title>
-<link rel="stylesheet" href="/assets/style.css"/>
+<link rel="stylesheet" href="/assets/style.css?v=tmalign1"/>
 </head>
 <body>
 <nav class="navbar" aria-label="Primary navigation">

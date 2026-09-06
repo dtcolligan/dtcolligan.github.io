@@ -150,6 +150,10 @@ figcaption code { background: none; padding: 0; }
 }
 .fig-panel img, .fig-panel svg { max-width: 100%; height: auto; display: block; }
 .fig-panel .tablewrap { background: none; padding: 0; margin: 0; }
+/* .fig-annot: for a chart whose right-hand annotations run past its
+   viewBox (overflow: visible lets them hang out); reserves a gutter so
+   they stay on the panel. Better fixed by widening the viewBox. */
+.fig-annot .fig-panel { padding-right: 4rem; }
 .fig-panel svg.chart .dot,
 .fig-panel svg.chart .band { stroke: var(--panel); }
 
@@ -215,13 +219,16 @@ svg.chart .band      { stroke: var(--bg); stroke-width: 2; stroke-linejoin: roun
 .site-footer a:hover { color: var(--link); }
 
 /* --------------------------------------------------------- home page bits */
+/* Same roles as the post list: serif for titles and prose, sans for the
+   meta line under each item and for the link row at the foot. */
 .work { margin-bottom: 2em; }
 .work-title { font-weight: bold; font-size: 1.05em; margin-bottom: 0.2em; }
 .work-title a { color: inherit; }
+.work-title a:hover { color: var(--link); }
 .work p { margin: 0.2em 0 0.5em; }
-.meta { font-size: 0.9em; color: var(--muted); }
+.meta { font-family: var(--font-sans); font-size: 0.85rem; color: var(--muted); }
 .now p { margin: 0.4em 0; }
-.links { margin-top: 3em; font-size: 0.95em; }
+.links { margin-top: 3em; font-family: var(--font-sans); font-size: 0.85rem; }
 .links a { margin-right: 1.4em; }
 
 @media (max-width: 620px) {
@@ -230,4 +237,5 @@ svg.chart .band      { stroke: var(--bg); stroke-width: 2; stroke-linejoin: roun
   main { padding-top: 40px; }
   .post h1 { margin-top: 1.5rem; }
   .fig-panel { padding: 1rem; }
+  .fig-annot .fig-panel { padding-right: 3rem; }
 }
