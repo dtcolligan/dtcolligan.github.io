@@ -1,5 +1,6 @@
 :root {
-  --bg:         #f9f5ec;   /* cream */
+  --bg:         #ffffff;   /* page ground */
+  --panel:      #f9f5ec;   /* cream: figure panels, table wraps, code blocks only */
   --text:       #1a1a1a;
   --text-2:     #55534d;
   --muted:      #777777;
@@ -19,6 +20,14 @@
   --grid:   #e4ded0;
   --axis:   #cdc6b6;
 
+  /* chart style guide, see the CHARTS comment block below */
+  --chart-grid:      var(--grid);
+  --chart-axis:      var(--axis);
+  --chart-text:      var(--muted);
+  --chart-label:     var(--text-2);
+  --chart-font:      var(--font-sans);
+  --chart-font-size: 0.8rem;
+
   --font-serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
   --font-sans:  system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono:  'SF Mono', 'Fira Code', ui-monospace, Menlo, monospace;
@@ -32,24 +41,26 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-serif);
-  line-height: 1.7;
+  line-height: 1.45;
   -webkit-font-smoothing: antialiased;
 }
 
-.container { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+.container { max-width: 700px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
 
 /* ------------------------------------------------------------------ nav */
 .navbar {
-  max-width: 720px; margin: 0 auto; padding: 34px 20px 0;
+  max-width: 700px; margin: 0 auto; padding: 34px 20px 0;
   display: flex; align-items: baseline; justify-content: space-between; gap: 20px;
+  font-family: var(--font-sans);
 }
 .nav-brand {
-  font-family: var(--font-serif); font-size: 1.05em; font-weight: bold;
+  font-family: var(--font-sans); font-size: 0.95rem; font-weight: 600;
   color: var(--text); text-decoration: none;
 }
 .nav-links { display: flex; gap: 1.4em; }
 .nav-link {
-  font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.09em;
+  font-family: var(--font-sans);
+  font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em;
   color: var(--muted); text-decoration: none;
 }
 .nav-link:hover { color: var(--link); }
@@ -63,64 +74,131 @@ a:hover { text-decoration: underline; }
 
 h1 { font-size: 2.2em; line-height: 1.2; margin: 0 0 0.1em; font-weight: bold; }
 h2 {
-  margin-top: 2.6em; margin-bottom: 0.8em;
-  font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.09em;
+  margin-top: 2em; margin-bottom: 0.7em;
+  font-size: 1.2em; line-height: 1.3;
   color: var(--text); font-weight: bold;
 }
 h2 .anchor { text-decoration: none; opacity: 0; margin-left: 8px; }
 h2:hover .anchor { opacity: 1; }
 
-p  { margin: 0 0 1.2em; }
-ul { padding-left: 1.2em; margin: 0 0 1.2em; }
-li { margin-bottom: 0.5em; }
+p  { margin: 0 0 1.1em; }
+ul { padding-left: 1.2em; margin: 0 0 1.1em; }
+li { margin-bottom: 0.4em; }
 
 .tagline { font-size: 1.25em; margin: 0 0 1.5em; }
-.post-meta { font-size: 0.9em; color: var(--muted); margin: 0 0 2.4em; }
+.post-meta {
+  font-family: var(--font-sans); font-size: 0.85rem;
+  color: var(--muted); margin: 0 0 2.4em;
+}
 .post-endmark { text-align: center; color: var(--muted); margin: 3.4em 0 0; }
+
+/* post pages: <main class="container post">. Title and date centred,
+   prose stays left. */
+.post h1 { text-align: center; margin-top: 2.5rem; }
+.post h1 + .post-meta { text-align: center; margin-bottom: 3.5rem; }
 
 code { font-family: var(--font-mono); font-size: 0.82em;
        background: var(--code-bg); padding: 1px 4px; border-radius: 3px; }
 code.fn { background: none; padding: 0; font-weight: bold; color: var(--text); }
+pre {
+  background: var(--panel); padding: 1rem 1.25rem; border-radius: 2px;
+  overflow-x: auto; margin: 1.6em 0;
+  font-family: var(--font-mono); font-size: 0.82em; line-height: 1.5;
+}
+pre code { background: none; padding: 0; font-size: inherit; }
 
 hr { border: none; border-top: 1px solid var(--border); margin: 2.8em 0; }
 
 /* --------------------------------------------------------------- tables */
-.tablewrap { overflow-x: auto; margin: 1.6em 0; }
+.tablewrap {
+  overflow-x: auto; margin: 1.6em 0;
+  background: var(--panel); padding: 0.5rem 1.25rem; border-radius: 2px;
+}
 table { border-collapse: collapse; width: 100%;
         font-family: var(--font-sans); font-size: 0.8em; }
 th, td { text-align: left; padding: 7px 14px 7px 0;
          border-bottom: 1px solid var(--border); white-space: nowrap;
          font-variant-numeric: tabular-nums; }
-th { color: var(--muted); font-weight: normal; }
+th { font-family: var(--font-sans); color: var(--muted); font-weight: normal; }
+tr:last-child td { border-bottom: none; }
 
 /* -------------------------------------------------------------- figures */
+/*
+   Figure component. Panel on the cream surface, caption in sans beneath,
+   left-aligned. Markup:
+
+     <figure class="fig">
+       <div class="fig-panel">
+         <img src="…" alt="…">          (or an inline <svg class="chart">)
+       </div>
+       <figcaption><strong>Figure 1:</strong> caption text.</figcaption>
+     </figure>
+
+   Bare <figure> without .fig still works (existing posts) and gets the
+   same caption style, just no panel.
+*/
 figure { margin: 2.6em 0; }
-figcaption { font-size: 0.85em; line-height: 1.6; color: var(--muted); margin-top: 0.8em; }
+figcaption {
+  font-family: var(--font-sans); font-size: 0.9rem; line-height: 1.45;
+  color: var(--text-2); margin-top: 0.6rem; text-align: left;
+}
 figcaption code { background: none; padding: 0; }
+
+.fig { margin: 2.6em 0; }
+.fig-panel {
+  background: var(--panel); padding: 1.5rem; border-radius: 2px;
+}
+.fig-panel img, .fig-panel svg { max-width: 100%; height: auto; display: block; }
+.fig-panel .tablewrap { background: none; padding: 0; margin: 0; }
+.fig-panel svg.chart .dot,
+.fig-panel svg.chart .band { stroke: var(--panel); }
+
 .legend { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 12px;
           font-family: var(--font-sans); font-size: 0.72em; color: var(--text-2); }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
 .legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
 
+/* --------------------------------------------------------------- CHARTS */
+/*
+   Chart style guide. Every chart on the site, SVG or otherwise, uses:
+
+     grid lines   --chart-grid   (= --grid, #e4ded0), 1px
+     axis line    --chart-axis   (= --axis, #cdc6b6), 1px
+     series       --s1 #2a78d6, --s2 #eb6834, --s3 #1baf7a, in that order
+     ordinal pair --ord-lo / --ord-hi for before/after of one thing
+     references   --r8 / --r35 for dashed reference lines
+     text         --chart-font (sans) at --chart-font-size (0.8rem);
+                  tick labels in --chart-text, value labels in --chart-label,
+                  titles and category labels in --text at 600 weight
+     knockouts    dots and stacked bands stroke in the surface colour
+                  (--bg on the page, --panel inside .fig-panel)
+
+   Inline SVGs use a viewBox, so text inside them is set in viewBox units
+   (11px ticks, 12.5px titles at a 680-wide viewBox), which lands at about
+   0.8rem when rendered at the prose measure. Charts sit in a .fig-panel,
+   with the legend above the SVG and the caption below the panel.
+*/
 svg.chart { width: 100%; height: auto; display: block; overflow: visible;
-            font-family: var(--font-sans); }
-svg.chart text      { fill: var(--muted); font-size: 11px; }
-svg.chart text.val  { fill: var(--text-2); font-size: 11px; font-variant-numeric: tabular-nums; }
+            font-family: var(--chart-font); }
+svg.chart text      { fill: var(--chart-text); font-size: 11px; }
+svg.chart text.val  { fill: var(--chart-label); font-size: 11px; font-variant-numeric: tabular-nums; }
 svg.chart text.cat,
 svg.chart text.ttl  { fill: var(--text); font-size: 12.5px; font-weight: 600; }
-svg.chart .grid      { stroke: var(--grid); stroke-width: 1; }
-svg.chart .axis      { stroke: var(--axis); stroke-width: 1; }
+svg.chart .grid      { stroke: var(--chart-grid); stroke-width: 1; }
+svg.chart .axis      { stroke: var(--chart-axis); stroke-width: 1; }
 svg.chart .rule      { stroke: var(--text-2); stroke-width: 1.5; }
-svg.chart .marker    { stroke: var(--axis); stroke-width: 1; }
+svg.chart .marker    { stroke: var(--chart-axis); stroke-width: 1; }
 svg.chart .connector { stroke: var(--muted); stroke-width: 2; }
-svg.chart .leader    { stroke: var(--axis); stroke-width: 1; }
+svg.chart .leader    { stroke: var(--chart-axis); stroke-width: 1; }
 svg.chart .dot       { stroke: var(--bg); stroke-width: 2; }
 svg.chart .band      { stroke: var(--bg); stroke-width: 2; stroke-linejoin: round; }
 
 /* ------------------------------------------------------------ post list */
 .post-list { list-style: none; padding: 0; margin: 0; }
 .post-list li { margin-bottom: 2.2em; }
-.post-list .date { font-size: 0.85em; color: var(--muted); display: block; }
+.post-list .date {
+  font-family: var(--font-sans); font-size: 0.8rem; color: var(--muted); display: block;
+}
 .post-list .title { font-weight: bold; font-size: 1.05em; margin: 0.1em 0 0.2em; }
 .post-list .title a { color: var(--text); }
 .post-list .title a:hover { color: var(--link); }
@@ -128,9 +206,9 @@ svg.chart .band      { stroke: var(--bg); stroke-width: 2; stroke-linejoin: roun
 
 /* --------------------------------------------------------------- footer */
 .site-footer {
-  max-width: 720px; margin: 4.5em auto 0; padding: 20px 20px 56px;
+  max-width: 700px; margin: 4.5em auto 0; padding: 20px 20px 56px;
   border-top: 1px solid var(--border);
-  font-size: 0.9em; color: var(--muted);
+  font-family: var(--font-sans); font-size: 0.85rem; color: var(--muted);
   display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
 }
 .site-footer a { color: var(--muted); }
@@ -150,4 +228,6 @@ svg.chart .band      { stroke: var(--bg); stroke-width: 2; stroke-linejoin: roun
   .container, .navbar { padding-left: 16px; padding-right: 16px; }
   h1 { font-size: 1.75em; }
   main { padding-top: 40px; }
+  .post h1 { margin-top: 1.5rem; }
+  .fig-panel { padding: 1rem; }
 }
