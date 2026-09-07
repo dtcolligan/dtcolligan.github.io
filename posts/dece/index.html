@@ -34,7 +34,7 @@
 </nav>
 <main id="main-content" class="container post">
 <h1>DeCE: a review</h1>
-<p class="post-meta">September 7, 2026 · 5 min read</p>
+<p class="post-meta">September 7, 2026 · 4 min read</p>
 
 <h2 id="paper">1. The paper<a class="anchor" href="#paper" aria-label="Link to this section">#</a></h2>
 
@@ -100,7 +100,7 @@ judges (GPTScore and G-Eval) and RAGChecker, a claim-checking method.</p>
 </figure>
 
 <p>The headline is the F2 column: DeCE correlates with the experts at 0.78,
-against 0.35 to 0.48 for everything else. That is a big gap and it is real.</p>
+against 0.35 to 0.48 for everything else.</p>
 
 <p>The next two columns say where it comes from. On recall, DeCE gets 0.80 and
 the others get 0.39 to 0.56, so the criteria extracted from the Required
@@ -109,42 +109,31 @@ criteria do. On precision, DeCE gets 0.69 and GPTScore also gets 0.69, so the
 claim-checking half of DeCE is no better than an existing judge. All of the
 gain is recall.</p>
 
-<p>The last column is the one to hold in mind. When experts give one overall
+<p>However, when experts give one overall
 score instead of scoring in DeCE's terms, the plain pointwise judge agrees
 with them better than DeCE does, 0.59 to 0.46. DeCE matches experts best when
 the experts are asked to think like DeCE.</p>
 
-<p>Two more results. The criteria the judge writes are good: experts reviewed
-all 979 of them and changed 11.95%, dropped 0.7% and added 2.0%. And the
-models trade off: the two reasoning models, Gemini 2.5 Pro and DeepSeek-R1,
-cover nearly everything required (recall near 1) but only about 42% of what
-they say is supported by the gold standard answer, while the legal fine-tune
-is the most precise and covers the least.</p>
-
-<p>(One footnote: the paper gives G-Eval F2 as 0.42 in its Table 2 and 0.48 in
-its Table 3; the table above uses Table 3.)</p>
+<p>The criteria the judge writes are good: experts reviewed
+all 979 of them and changed 11.95%, dropped 0.7% and added 2.0%.</p>
 
 <h2 id="thoughts">4. My thoughts<a class="anchor" href="#thoughts" aria-label="Link to this section">#</a></h2>
 
 <p>The Required and Helpful split is a great contribution to rubric design. It
-encodes an inductive bias: that in this domain some content governs the
-answer and some only supports it. The expert supplies that bias just by
-writing the gold standard answer in two sections. In the right setting, a
+encodes an inductive bias. In the right setting, a
 domain where that distinction is real, it improves grader correctness, and
 the results show it: recall against the Required criteria tracks experts at
-0.80 where the generic frameworks get 0.53 to 0.56. In a setting where the
-distinction is not real, the same bias is a distortion.</p>
+0.80 where the generic frameworks get 0.53 to 0.56.</p>
 
 <p>The two metrics have synergy. Precision rewards saying less, recall rewards
 saying more, and each caps the other's exploit.</p>
 
 <p>However the gold standard answer cannot be exhausted. "Supported" means the
 expert wrote it down, not that it is true, so a valid authority the expert
-did not list scores 0. The paper proposes two fixes and I am not convinced by
-either: flexible authority matching asks the verifier to make the legal
-judgement the reference was there to avoid, and human-in-the-loop promotion, even with an expert signing off each
-addition, lets recurring model claims shape the Helpful pool that later
-models are scored against.</p>
+did not list scores 0. The paper proposes two fixes. Flexible authority matching moves the legal
+judgement into the verifier, and human-in-the-loop promotion lets model
+outputs feed the reference over time. Both are reasonable, and both trade
+away some of what made the reference-based design clean.</p>
 
 <p>On the correlation, the 0.78 is DeCE agreeing with experts asked to think in
 DeCE's terms, and on the unframed score the pointwise judge is ahead. F2 was
