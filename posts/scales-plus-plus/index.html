@@ -34,7 +34,7 @@
 </nav>
 <main id="main-content" class="container post">
 <h1>Scales++: a review</h1>
-<p class="post-meta">September 7, 2026 · 5 min read</p>
+<p class="post-meta">September 7, 2026 · 4 min read</p>
 
 <h2 id="paper">1. The paper<a class="anchor" href="#paper" aria-label="Link to this section">#</a></h2>
 
@@ -52,8 +52,7 @@ properties instead, which they call item-centric.</p>
 <h2 id="method">2. The method<a class="anchor" href="#method" aria-label="Link to this section">#</a></h2>
 
 <p>Every item's text is annotated by GPT-4o on 16 cognitive demand dimensions
-(logical reasoning, specific knowledge areas and so on), each scored 0 to 5. No
-model is ever run on anything at this stage. They drop the dimensions with no
+(logical reasoning, specific knowledge areas and so on), each scored 0 to 5. They drop the dimensions with no
 variance, reduce the 16 to 3 with UMAP, run k-means with k equal to the budget,
 and keep the item nearest each centre.</p>
 
@@ -82,8 +81,6 @@ of items have a unique embedding, against 84% or more on the other benchmarks
 and 96.6% on TruthfulQA, and they suggest embedding density as a meta-property
 for predicting where the method will work.</p>
 
-<p>Seed variance is high for every method, theirs included, and they say so.</p>
-
 <h2 id="thoughts">4. My thoughts<a class="anchor" href="#thoughts" aria-label="Link to this section">#</a></h2>
 
 <p>The item-centric argument is right, and I am surprised no one had taken it
@@ -110,20 +107,19 @@ upstream of the headline through the bias term that sets the blend weight.</p>
 
 <p>The annotations are GPT-4o judgments, and the validation for them is borrowed.
 It comes from the General Scales paper, where a Delphi consensus of five human
-raters agreed with GPT-4o at 0.75 to 0.94 Spearman across dimensions. That
-certifies one annotator on one item mix. Swap the annotator and the
-certificate lapses, which the authors agree with and would fix with a new
-human study. Swap the domain and it lapses too, and that one holds even if
-GPT-4o never changes. The paper's own Table 5 is the evidence: GSM8K's items
-collapse onto the same embedding because 16 general dimensions do not resolve
-inside a single domain. In conversation with the authors, the answer to that
+raters agreed with GPT-4o at 0.75 to 0.94 Spearman across dimensions. That validation holds for one annotator on one set of benchmarks. If you
+change the annotator, it no longer applies, which the authors agree with and
+would fix with a new human study. If you change the domain, it no longer
+applies either, even with the same GPT-4o. The paper's own Table 5 shows this:
+half of GSM8K's items get the same embedding, because 16 general dimensions
+cannot tell maths problems apart from each other. In conversation with the authors, the answer to that
 was that for a new domain they would redesign the 16 around the atomic skills
 you actually care about, and that a per-domain, per-dimension agreement study
 would show exactly where the scales have validity, especially the levels. I
 think that is the right future work and it is what I would want before using
-the scales on professional work.</p>
+the scales on a specialised domain.</p>
 
-<p>Lite is elegant, and it has a cost. It distils the annotator, so any annotator
+<p>Lite is elegant, but it has a cost. It distils the annotator, so any annotator
 noise is trained into the GNN, and the rationale GPT-4o was required to give
 is traded for a bare class. In exchange a frozen annotator is deterministic
 and versionable, which an API model is not.</p>
