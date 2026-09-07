@@ -99,7 +99,8 @@ RAGChecker, a claim-checking method.</p>
 </figure>
 
 <p>Blank cells were not measured. The F2 and overall columns come from two
-different studies.
+different studies. The paper gives G-Eval F2 as 0.42 in its Table 2 and 0.48 in
+its Table 3; the table above uses Table 3.
 On F2, DeCE correlates with the experts at 0.78, against 0.35 to 0.48 for
 everything else.</p>
 
@@ -131,7 +132,7 @@ frameworks get 0.53 to 0.56.</p>
 <p>Precision rewards saying less, recall rewards saying more. Each caps the
 other's exploit.</p>
 
-<p>However the gold standard answer cannot be exhausted. "Supported" means the
+<p>However the gold standard answer is not exhaustive. "Supported" means the
 expert wrote it down, not that it is true, so a valid authority the expert
 did not list scores 0. The paper proposes two fixes. Flexible authority
 matching moves the legal judgement into the verifier, and human-in-the-loop
