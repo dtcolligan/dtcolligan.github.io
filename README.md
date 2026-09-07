@@ -19,3 +19,4 @@ Start a new post from `tools/post-head-template.html`. `python3 tools/check_card
    page URL do not work: the canonical tag sends X back to the cached entry.
 4. A brand-new URL shows NO card in the composer until X has crawled it: submit it to the validator first (step 3), then paste. Check the card by pasting the link in the X composer; the thumbnail should
    render in the preview. Only then share the link.
+5. A freshly posted tweet can show the card without its picture for a few hours even when the composer preview showed it: the image on a posted card arrives through a slower pipeline than the preview (GDPval and DeCE both filled in later, 7 Sep 2026). Check the composer preview first; if that has the picture, wait.
