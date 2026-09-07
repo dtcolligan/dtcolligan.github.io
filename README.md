@@ -17,5 +17,5 @@ Start a new post from `tools/post-head-template.html`. `python3 tools/check_card
    submit the page URL at https://cards-dev.twitter.com/validator. It shows no
    preview any more, but it forces an immediate re-crawl. Query strings on the
    page URL do not work: the canonical tag sends X back to the cached entry.
-4. Check the card by pasting the link in the X composer; the thumbnail should
+4. A brand-new URL shows NO card in the composer until X has crawled it: submit it to the validator first (step 3), then paste. Check the card by pasting the link in the X composer; the thumbnail should
    render in the preview. Only then share the link.
