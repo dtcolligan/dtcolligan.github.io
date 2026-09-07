@@ -13,7 +13,7 @@
     <link href="https://dtcolligan.com/posts/scales-plus-plus/"/>
     <id>https://dtcolligan.com/posts/scales-plus-plus/</id>
     <updated>2026-09-07T00:00:00Z</updated>
-    <summary>A review of Scales++, an item-centric method for picking a tiny benchmark subset that predicts the full score. It works at very small samples and random catches up, so the value is steering training. The annotator&#x27;s validation is borrowed, and 16 general dimensions do not resolve inside a single domain.</summary>
+    <summary>A review of Scales++, an item-centric method for picking a tiny benchmark subset that predicts the full score. It subsets benchmarks that model-centric methods cannot touch, at 18x lower setup cost, and works best exactly where random sampling is worst. The open questions are the annotator&#x27;s borrowed validation and whether 16 general dimensions resolve inside a single domain.</summary>
   </entry>
   <entry>
     <title>Measuring what Matters: a review</title>
