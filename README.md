@@ -1,6 +1,8 @@
 # dtcolligan.github.io
 ## Publishing a post
 
+Start a new post from `tools/post-head-template.html`. `python3 tools/check_cards.py` checks every post's card markup and runs as a pre-push hook (`.git/hooks/pre-push`, local; re-create it on a fresh clone).
+
 1. **Tag order matters to X.** In `<head>`, `twitter:card` must come before
    `twitter:image` (card, title, description, image, in that order). With the
    image tag first, X's parser drops the image silently: the validator logs
