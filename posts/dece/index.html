@@ -34,7 +34,7 @@
 </nav>
 <main id="main-content" class="container post">
 <h1>DeCE: a review</h1>
-<p class="post-meta">September 7, 2026 · 3 min read</p>
+<p class="post-meta">September 7, 2026 · 4 min read</p>
 
 <h2 id="paper">1. The paper<a class="anchor" href="#paper" aria-label="Link to this section">#</a></h2>
 
@@ -72,7 +72,8 @@ much as precision.</p>
 <p>224 US legal QA pairs, five models (GPT-4o, Gemini 2.5 Pro, DeepSeek-R1,
 Llama 3.1 405B, an in-house legal fine-tune of Llama 3.1 70B). Four legal
 experts, one annotator per item. Two human targets: 100 answers scored as
-precision and recall, and 244 answers given one overall score out of 4.</p>
+precision and recall, and all 224 GPT-4o answers given one overall score out
+of 4 (their Table 3 lists that count as 244; the text says 224).</p>
 
 <p>Pearson correlation with the experts, from their Table 3:</p>
 
@@ -92,16 +93,17 @@ precision and recall, and 244 answers given one overall score out of 4.</p>
 <figcaption>Pearson correlation with the legal experts, from the paper's Table 3. n = 100 for the precision, recall and F2 columns, 244 for the overall column.</figcaption>
 </figure>
 
-<p>Three things to read off it. DeCE's F2 correlates at 0.78 with experts
+<p>Three things to read off it. (One footnote: the paper gives G-Eval F2 as
+0.42 in its Table 2 and 0.48 in its Table 3; the table above uses Table 3.) DeCE's F2 correlates at 0.78 with experts
 scoring in DeCE's own terms, the best in the table by a margin. The gain is
 entirely recall, 0.80 against 0.53 to 0.56; on precision it ties GPTScore.
 Against the experts' overall score, the plain pointwise judge wins, 0.59 to
 0.46.</p>
 
 <p>The criteria hold up: of 979 generated, 11.95% were modified by experts, 0.7%
-discarded, 2.0% added. And the models trade off: generalists sit near recall
-1 with precision around 0.42, the legal fine-tune has the highest precision
-and the lowest recall.</p>
+discarded, 2.0% added. And the models trade off: the two reasoning models, Gemini 2.5 Pro and
+DeepSeek-R1, sit near recall 1 with precision around 0.42, while the legal
+fine-tune has the highest precision at the cost of recall.</p>
 
 <h2 id="thoughts">4. My thoughts<a class="anchor" href="#thoughts" aria-label="Link to this section">#</a></h2>
 
@@ -118,9 +120,9 @@ saying more, and each caps the other's exploit.</p>
 expert wrote it down, not that it is true, so a valid authority the expert
 did not list scores 0. The paper proposes two fixes and I am not convinced by
 either: flexible authority matching asks the verifier to make the legal
-judgement the reference was there to avoid, and human-in-the-loop promotion
-lets earlier models write the reference that later models are scored
-against.</p>
+judgement the reference was there to avoid, and human-in-the-loop promotion, even with an expert signing off each
+addition, lets recurring model claims shape the Helpful pool that later
+models are scored against.</p>
 
 <p>On the correlation, the 0.78 is DeCE agreeing with experts asked to think in
 DeCE's terms, and on the unframed score the pointwise judge is ahead. F2 was
