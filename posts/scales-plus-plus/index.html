@@ -34,7 +34,7 @@
 </nav>
 <main id="main-content" class="container post">
 <h1>Scales++: a review</h1>
-<p class="post-meta">September 7, 2026 · 4 min read</p>
+<p class="post-meta">September 7, 2026 · 5 min read</p>
 
 <h2 id="paper">1. The paper<a class="anchor" href="#paper" aria-label="Link to this section">#</a></h2>
 
@@ -69,14 +69,14 @@ Open LLM Leaderboard in under 20 minutes.</p>
 
 <h2 id="results">3. Results<a class="anchor" href="#results" aria-label="Link to this section">#</a></h2>
 
-<p>On the Open LLM Leaderboard a 0.25% subset, 286 items, predicts the full score
+<p>On the Open LLM Leaderboard a 0.25% subset predicts the full score
 with 3.2 points of mean absolute error. Random selection is 1.0 worse and
 gp-IRT is 0.3 worse, at 18x the setup cost. On Humanity's Last Exam, where no
 item-level history exists so IRT cannot run at all, they evaluated six
 frontier models themselves and a 2% sample gets 2.9 MAE against 3.2 for random.</p>
 
-<p>Per benchmark it is more mixed. Their words: similar or better than all other
-methods in roughly 70% of cases. TruthfulQA is bad for it. On GSM8K only 52.3%
+<p>Per benchmark it is more mixed. Their words: similar (within 2% MAE) or better than all other methods in
+roughly 70% of cases. TruthfulQA is bad for it. On GSM8K only 52.3%
 of items have a unique embedding, against 84% or more on the other benchmarks
 and 96.6% on TruthfulQA, and they suggest embedding density as a meta-property
 for predicting where the method will work.</p>
@@ -107,12 +107,14 @@ upstream of the headline through the bias term that sets the blend weight.</p>
 
 <p>The annotations are GPT-4o judgments, and the validation for them is borrowed.
 It comes from the General Scales paper, where a Delphi consensus of five human
-raters agreed with GPT-4o at 0.75 to 0.94 Spearman across dimensions. That validation holds for one annotator on one set of benchmarks. If you
+raters agreed with GPT-4o at 0.75 to 0.94 across dimensions. That validation holds for one annotator on one set of benchmarks. If you
 change the annotator, it no longer applies, which the authors agree with and
 would fix with a new human study. If you change the domain, it no longer
-applies either, even with the same GPT-4o. The paper's own Table 5 shows this:
-half of GSM8K's items get the same embedding, because 16 general dimensions
-cannot tell maths problems apart from each other. In conversation with the authors, the answer to that
+applies either, even with the same GPT-4o. The paper reports that only 52.3% of GSM8K items have a unique embedding,
+against 84% or more on the other benchmarks. The authors read that as
+embedding density rather than domain, and Scales++ still beats IRT there. My
+read is that 16 general dimensions cannot tell maths problems apart from each
+other, and any single specialised domain will look the same to them. In conversation with the authors, the answer to that
 was that for a new domain they would redesign the 16 around the atomic skills
 you actually care about, and that a per-domain, per-dimension agreement study
 would show exactly where the scales have validity, especially the levels. I
