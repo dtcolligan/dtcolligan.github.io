@@ -6,8 +6,15 @@
   <link href="https://dtcolligan.com/feeds/atom.xml" rel="self"/>
   <link href="https://dtcolligan.com/"/>
   <id>https://dtcolligan.com/</id>
-  <updated>2026-09-06T00:00:00Z</updated>
+  <updated>2026-09-07T00:00:00Z</updated>
   <author><name>Dom Colligan</name></author>
+  <entry>
+    <title>Scales++: a review</title>
+    <link href="https://dtcolligan.com/posts/scales-plus-plus/"/>
+    <id>https://dtcolligan.com/posts/scales-plus-plus/</id>
+    <updated>2026-09-07T00:00:00Z</updated>
+    <summary>A review of Scales++, an item-centric method for picking a tiny benchmark subset that predicts the full score. It works at very small samples and random catches up, so the value is steering training. The annotator&#x27;s validation is borrowed, and 16 general dimensions do not resolve inside a single domain.</summary>
+  </entry>
   <entry>
     <title>Measuring what Matters: a review</title>
     <link href="https://dtcolligan.com/posts/measuring-what-matters/"/>
