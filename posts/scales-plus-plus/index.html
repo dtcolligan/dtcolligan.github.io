@@ -34,7 +34,7 @@
 </nav>
 <main id="main-content" class="container post">
 <h1>Scales++: a review</h1>
-<p class="post-meta">September 7, 2026 · 5 min read</p>
+<p class="post-meta">September 7, 2026 · 4 min read</p>
 
 <h2 id="paper">1. The paper<a class="anchor" href="#paper" aria-label="Link to this section">#</a></h2>
 
@@ -85,7 +85,7 @@ for predicting where the method will work.</p>
 
 <p>The item-centric argument is right, and I am surprised no one had taken it
 before. Model-centric subsets are being actively invalidated. Post-training
-teams target public failure patterns, so the items chosen because past models
+teams target the failures of previous models, so the items chosen because past models
 failed them are exactly the items the next round of training fixes first,
 which breaks the assumption model-centric methods depend on.</p>
 
@@ -97,13 +97,6 @@ training and hold out unseen benchmarks for the finished model. This is what
 Thomson 1.0 does with CapTrack. A caveat from the authors, which I take, is
 that the crossover with random is an empirical finding and not a law, and it
 will move with the benchmark set.</p>
-
-<p>The two estimators are a nice piece of design. They predict the same number
-but generalise along different axes, similar items against harder items, and
-the blend is a bias-variance handoff rather than an average. One thing I would
-want ablated: every regression gets an added point at performance 0 and
-difficulty 20, a hypothetical maximum, and that hand-written prior sits
-upstream of the headline through the bias term that sets the blend weight.</p>
 
 <p>The annotations are GPT-4o judgments, and the validation for them is borrowed.
 It comes from the General Scales paper, where a Delphi consensus of five human
