@@ -91,14 +91,17 @@ RAGChecker, a claim-checking method.</p>
 <tr><td>GPTScore</td><td>0.69</td><td>0.56</td><td>0.48</td><td></td></tr>
 <tr><td>G-Eval</td><td>0.66</td><td>0.53</td><td>0.48</td><td></td></tr>
 <tr><td>RAGChecker</td><td>0.62</td><td>0.39</td><td>0.38</td><td></td></tr>
-<tr><td>\1\nBlank cells are metrics that were not measured against that human target;\nthe F2 and overall columns come from two different studies.\n</td></tr>
-<tr><td>On F2, DeCE correlates with the experts at 0.78, against 0.35 to 0.48 for</td></tr>
-<tr><td>everything else.</td></tr>
+<tr><td><strong>DeCE</strong></td><td><strong>0.69</strong></td><td><strong>0.80</strong></td><td><strong>0.78</strong></td><td><strong>0.46</strong></td></tr>
 </tbody>
 </table>
 </div>
 <figcaption>Pearson correlation with the legal experts, from the paper's Table 3. n = 100 for the precision, recall and F2 columns, 244 for the overall column.</figcaption>
 </figure>
+
+<p>Blank cells were not measured. The F2 and overall columns come from two
+different studies.
+On F2, DeCE correlates with the experts at 0.78, against 0.35 to 0.48 for
+everything else.</p>
 
 <p>On recall DeCE
 gets 0.80 and the others get 0.39 to 0.56, so criteria extracted from the
