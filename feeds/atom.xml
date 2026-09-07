@@ -9,6 +9,13 @@
   <updated>2026-09-07T00:00:00Z</updated>
   <author><name>Dom Colligan</name></author>
   <entry>
+    <title>DeCE: a review</title>
+    <link href="https://dtcolligan.com/posts/dece/"/>
+    <id>https://dtcolligan.com/posts/dece/</id>
+    <updated>2026-09-07T12:00:00Z</updated>
+    <summary>A review of DeCE, an evaluation framework that has an LLM judge report precision and recall from criteria extracted from an expert&#x27;s gold standard answer. The Required and Helpful split is a great piece of rubric design and the recall half tracks experts at 0.80, but the gold standard answer cannot be exhausted and the 0.78 headline is agreement with experts asked to think in DeCE&#x27;s terms.</summary>
+  </entry>
+  <entry>
     <title>Scales++: a review</title>
     <link href="https://dtcolligan.com/posts/scales-plus-plus/"/>
     <id>https://dtcolligan.com/posts/scales-plus-plus/</id>

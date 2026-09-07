@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DeCE: a review</title>
+<meta name="description" content="A review of DeCE, an evaluation framework that has an LLM judge report precision and recall from criteria extracted from an expert&#x27;s gold standard answer. The Required and Helpful split is a great piece of rubric design and the recall half tracks experts at 0.80, but the gold standard answer cannot be exhausted and the 0.78 headline is agreement with experts asked to think in DeCE&#x27;s terms.">
+<link rel="canonical" href="https://dtcolligan.com/posts/dece/">
+<meta property="og:title" content="DeCE: a review">
+<meta property="og:description" content="A review of DeCE, an evaluation framework that has an LLM judge report precision and recall from criteria extracted from an expert&#x27;s gold standard answer. The Required and Helpful split is a great piece of rubric design and the recall half tracks experts at 0.80, but the gold standard answer cannot be exhausted and the 0.78 headline is agreement with experts asked to think in DeCE&#x27;s terms.">
+<meta property="og:site_name" content="dtcolligan.com">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://dtcolligan.com/posts/dece/">
+<meta property="og:image" content="https://dtcolligan.com/assets/cards/card-dece-0501fff3.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DeCE: a review — dtcolligan.com">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DeCE: a review">
+<meta name="twitter:description" content="A review of DeCE, an evaluation framework that has an LLM judge report precision and recall from criteria extracted from an expert&#x27;s gold standard answer. The Required and Helpful split is a great piece of rubric design and the recall half tracks experts at 0.80, but the gold standard answer cannot be exhausted and the 0.78 headline is agreement with experts asked to think in DeCE&#x27;s terms.">
+<meta name="twitter:image" content="https://dtcolligan.com/assets/cards/sq-dece-fc42923f.png">
+<link rel="alternate" type="application/atom+xml" title="Dom Colligan — Atom Feed" href="/feeds/atom.xml">
+<link rel="stylesheet" href="/assets/style.css?v=tmalign1">
+
+</head>
+<body>
+<nav class="navbar" aria-label="Primary navigation">
+  <a href="/" class="nav-brand">Dom Colligan</a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Home</a>
+    <a href="/posts/" class="nav-link active" aria-current="page">Posts</a>
+    <a href="https://github.com/dtcolligan" class="nav-link">GitHub</a>
+  </div>
+</nav>
+<main id="main-content" class="container post">
+<h1>DeCE: a review</h1>
+<p class="post-meta">September 7, 2026 · 3 min read</p>
+
+<h2 id="paper">1. The paper<a class="anchor" href="#paper" aria-label="Link to this section">#</a></h2>
+
+<p>DeCE is an evaluation framework for an LLM judge. Instead of one pointwise
+score per answer, the judge reports precision and recall, each computed from
+criteria extracted from an expert's gold standard answer. Yu, Seedat,
+Herrmannova, Schilder and Schwarz at Thomson Reuters, EMNLP 2025 Industry
+Track.</p>
+
+<p>The setting is legal QA: long-form answers that have to cite the statutes,
+regulations and cases that apply. DeCE generates the checklist for each
+question from the gold standard answer.</p>
+
+<h2 id="method">2. The method<a class="anchor" href="#method" aria-label="Link to this section">#</a></h2>
+
+<p>Each task is a question, a model answer, and a gold standard answer written
+by an expert in two sections: Required Information, the content that governs
+the question, and Helpful Information, supporting authorities.</p>
+
+<p>Recall is computed from the Required Information only. The judge turns it
+into a checklist of criteria, marks each 1 or 0 against the model answer, and
+recall is the fraction satisfied. Coverage of what must be there.</p>
+
+<p>Precision is computed against the whole gold standard answer. The judge
+breaks the model answer into claims, marks each 1 or 0 on whether the gold
+standard answer supports it, and precision is the fraction supported. How
+much of what the model said the expert would stand behind.</p>
+
+<p>Criteria are generated per question, not from a fixed rubric. Claude 3.5
+Sonnet does every step. The headline metric is F2, recall weighted twice as
+much as precision.</p>
+
+<h2 id="results">3. Results<a class="anchor" href="#results" aria-label="Link to this section">#</a></h2>
+
+<p>224 US legal QA pairs, five models (GPT-4o, Gemini 2.5 Pro, DeepSeek-R1,
+Llama 3.1 405B, an in-house legal fine-tune of Llama 3.1 70B). Four legal
+experts, one annotator per item. Two human targets: 100 answers scored as
+precision and recall, and 244 answers given one overall score out of 4.</p>
+
+<p>Pearson correlation with the experts, from their Table 3:</p>
+
+<figure>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Metric</th><th>vs human precision</th><th>vs human recall</th><th>vs human F2</th><th>vs human overall</th></tr></thead>
+<tbody>
+<tr><td>Pointwise judge</td><td></td><td></td><td>0.35</td><td>0.59</td></tr>
+<tr><td>GPTScore</td><td>0.69</td><td>0.56</td><td>0.48</td><td></td></tr>
+<tr><td>G-Eval</td><td>0.66</td><td>0.53</td><td>0.48</td><td></td></tr>
+<tr><td>RAGChecker</td><td>0.62</td><td>0.39</td><td>0.38</td><td></td></tr>
+<tr><td>DeCE</td><td>0.69</td><td>0.80</td><td>0.78</td><td>0.46</td></tr>
+</tbody>
+</table>
+</div>
+<figcaption>Pearson correlation with the legal experts, from the paper's Table 3. n = 100 for the precision, recall and F2 columns, 244 for the overall column.</figcaption>
+</figure>
+
+<p>Three things to read off it. DeCE's F2 correlates at 0.78 with experts
+scoring in DeCE's own terms, the best in the table by a margin. The gain is
+entirely recall, 0.80 against 0.53 to 0.56; on precision it ties GPTScore.
+Against the experts' overall score, the plain pointwise judge wins, 0.59 to
+0.46.</p>
+
+<p>The criteria hold up: of 979 generated, 11.95% were modified by experts, 0.7%
+discarded, 2.0% added. And the models trade off: generalists sit near recall
+1 with precision around 0.42, the legal fine-tune has the highest precision
+and the lowest recall.</p>
+
+<h2 id="thoughts">4. My thoughts<a class="anchor" href="#thoughts" aria-label="Link to this section">#</a></h2>
+
+<p>The Required and Helpful split is a great contribution to rubric design. The
+expert encodes an inductive bias about the domain, what governs and what
+supports, just by writing the gold standard answer in two sections, and it
+improves grader correctness: recall against the Required criteria tracks
+experts at 0.80 where the generic frameworks get 0.53 to 0.56.</p>
+
+<p>The two metrics have synergy. Precision rewards saying less, recall rewards
+saying more, and each caps the other's exploit.</p>
+
+<p>However the gold standard answer cannot be exhausted. "Supported" means the
+expert wrote it down, not that it is true, so a valid authority the expert
+did not list scores 0. The paper proposes two fixes and I am not convinced by
+either: flexible authority matching asks the verifier to make the legal
+judgement the reference was there to avoid, and human-in-the-loop promotion
+lets earlier models write the reference that later models are scored
+against.</p>
+
+<p>On the correlation, the 0.78 is DeCE agreeing with experts asked to think in
+DeCE's terms, and on the unframed score the pointwise judge is ahead. F2 was
+chosen with the numbers in hand, length is never reported, and a correlation
+controlling for answer length is the one analysis I would want.</p>
+
+<p>So this is a great framework where the rubric design fits: expert domains
+with required content and a hierarchy of supporting material, law, medicine,
+compliance. There it encodes the right inductive bias and it correlates
+better with experts. Outside that shape the split has nothing to bite on.</p>
+
+<p>Worth reading if you build graders for expert work.</p>
+
+<hr>
+
+<p class="post-meta" style="margin-bottom:0">
+  <a href="https://arxiv.org/abs/2509.16093">arXiv:2509.16093</a>
+</p>
+<div class="post-endmark">❦</div>
+</main>
+<footer class="site-footer">
+  <span>Dom Colligan</span>
+  <span>
+    <a href="https://github.com/dtcolligan">GitHub</a> ·
+    <a href="https://x.com/DominicColligan">X</a> ·
+    <a href="mailto:dtcolligan@gmail.com">Email</a>
+  </span>
+</footer>
+</body>
+</html>
