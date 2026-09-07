@@ -34,7 +34,7 @@
 </nav>
 <main id="main-content" class="container post">
 <h1>DeCE: a review</h1>
-<p class="post-meta">September 7, 2026 · 4 min read</p>
+<p class="post-meta">September 7, 2026 · 5 min read</p>
 
 <h2 id="paper">1. The paper<a class="anchor" href="#paper" aria-label="Link to this section">#</a></h2>
 
@@ -69,13 +69,19 @@ much as precision.</p>
 
 <h2 id="results">3. Results<a class="anchor" href="#results" aria-label="Link to this section">#</a></h2>
 
-<p>224 US legal QA pairs, five models (GPT-4o, Gemini 2.5 Pro, DeepSeek-R1,
-Llama 3.1 405B, an in-house legal fine-tune of Llama 3.1 70B). Four legal
-experts, one annotator per item. Two human targets: 100 answers scored as
-precision and recall, and all 224 GPT-4o answers given one overall score out
-of 4 (their Table 3 lists that count as 244; the text says 224).</p>
+<p>They test DeCE on 224 legal questions, each with an expert's gold standard
+answer. Five models answer every question: GPT-4o, Gemini 2.5 Pro,
+DeepSeek-R1, Llama 3.1 405B, and a legal fine-tune of Llama 3.1 70B that
+Thomson Reuters trained in-house.</p>
 
-<p>Pearson correlation with the experts, from their Table 3:</p>
+<p>To check whether DeCE agrees with humans, four legal experts scored model
+answers themselves, one expert per answer. They did this in two ways. For 100
+answers (20 questions, all five models) they scored precision and recall the
+way DeCE does. For all 224 GPT-4o answers they gave a single overall score
+out of 4, the way a pointwise judge does (the paper's Table 3 lists that count
+as 244). Then each automatic metric is correlated with the matching human
+score. The comparison metrics are a pointwise LLM judge, two multidimensional
+judges (GPTScore and G-Eval) and RAGChecker, a claim-checking method.</p>
 
 <figure>
 <div class="tablewrap">
@@ -93,25 +99,41 @@ of 4 (their Table 3 lists that count as 244; the text says 224).</p>
 <figcaption>Pearson correlation with the legal experts, from the paper's Table 3. n = 100 for the precision, recall and F2 columns, 244 for the overall column.</figcaption>
 </figure>
 
-<p>Three things to read off it. (One footnote: the paper gives G-Eval F2 as
-0.42 in its Table 2 and 0.48 in its Table 3; the table above uses Table 3.) DeCE's F2 correlates at 0.78 with experts
-scoring in DeCE's own terms, the best in the table by a margin. The gain is
-entirely recall, 0.80 against 0.53 to 0.56; on precision it ties GPTScore.
-Against the experts' overall score, the plain pointwise judge wins, 0.59 to
-0.46.</p>
+<p>The headline is the F2 column: DeCE correlates with the experts at 0.78,
+against 0.35 to 0.48 for everything else. That is a big gap and it is real.</p>
 
-<p>The criteria hold up: of 979 generated, 11.95% were modified by experts, 0.7%
-discarded, 2.0% added. And the models trade off: the two reasoning models, Gemini 2.5 Pro and
-DeepSeek-R1, sit near recall 1 with precision around 0.42, while the legal
-fine-tune has the highest precision at the cost of recall.</p>
+<p>The next two columns say where it comes from. On recall, DeCE gets 0.80 and
+the others get 0.39 to 0.56, so the criteria extracted from the Required
+Information track what experts count as complete far better than generic
+criteria do. On precision, DeCE gets 0.69 and GPTScore also gets 0.69, so the
+claim-checking half of DeCE is no better than an existing judge. All of the
+gain is recall.</p>
+
+<p>The last column is the one to hold in mind. When experts give one overall
+score instead of scoring in DeCE's terms, the plain pointwise judge agrees
+with them better than DeCE does, 0.59 to 0.46. DeCE matches experts best when
+the experts are asked to think like DeCE.</p>
+
+<p>Two more results. The criteria the judge writes are good: experts reviewed
+all 979 of them and changed 11.95%, dropped 0.7% and added 2.0%. And the
+models trade off: the two reasoning models, Gemini 2.5 Pro and DeepSeek-R1,
+cover nearly everything required (recall near 1) but only about 42% of what
+they say is supported by the gold standard answer, while the legal fine-tune
+is the most precise and covers the least.</p>
+
+<p>(One footnote: the paper gives G-Eval F2 as 0.42 in its Table 2 and 0.48 in
+its Table 3; the table above uses Table 3.)</p>
 
 <h2 id="thoughts">4. My thoughts<a class="anchor" href="#thoughts" aria-label="Link to this section">#</a></h2>
 
-<p>The Required and Helpful split is a great contribution to rubric design. The
-expert encodes an inductive bias about the domain, what governs and what
-supports, just by writing the gold standard answer in two sections, and it
-improves grader correctness: recall against the Required criteria tracks
-experts at 0.80 where the generic frameworks get 0.53 to 0.56.</p>
+<p>The Required and Helpful split is a great contribution to rubric design. It
+encodes an inductive bias: that in this domain some content governs the
+answer and some only supports it. The expert supplies that bias just by
+writing the gold standard answer in two sections. In the right setting, a
+domain where that distinction is real, it improves grader correctness, and
+the results show it: recall against the Required criteria tracks experts at
+0.80 where the generic frameworks get 0.53 to 0.56. In a setting where the
+distinction is not real, the same bias is a distortion.</p>
 
 <p>The two metrics have synergy. Precision rewards saying less, recall rewards
 saying more, and each caps the other's exploit.</p>
@@ -132,7 +154,7 @@ controlling for answer length is the one analysis I would want.</p>
 <p>So this is a great framework where the rubric design fits: expert domains
 with required content and a hierarchy of supporting material, law, medicine,
 compliance. There it encodes the right inductive bias and it correlates
-better with experts. Outside that shape the split has nothing to bite on.</p>
+better with experts.</p>
 
 <p>Worth reading if you build graders for expert work.</p>
 
