@@ -135,10 +135,9 @@ judgement into the verifier, and human-in-the-loop promotion lets model
 outputs feed the reference over time. Both are reasonable, and both trade
 away some of what made the reference-based design clean.</p>
 
-<p>On the correlation, the 0.78 is DeCE agreeing with experts asked to think in
-DeCE's terms, and on the unframed score the pointwise judge is ahead. F2 was
-chosen with the numbers in hand, length is never reported, and a correlation
-controlling for answer length is the one analysis I would want.</p>
+<p>DeCE beats the pointwise judge when the experts score precision and recall,
+the pointwise judge beats DeCE when the experts give one overall score, and
+the paper never tests which of those an expert does unprompted.</p>
 
 <p>So this is a great framework where the rubric design fits: expert domains
 with required content and a hierarchy of supporting material, law, medicine,
