@@ -41,8 +41,7 @@
 <p>Bean et al. review 445 LLM benchmarks for construct validity, with 29 expert
 reviewers. Construct validity is the degree to which a benchmark score is
 evidence for the claim being made about the phenomenon. They break a benchmark
-into phenomenon, task, metric and claim, and validity breaks at the joints
-between them.</p>
+into phenomenon, task, metric and claim.</p>
 
 <p>They got to 445 from 46,114 papers at ICML, ICLR, NeurIPS and ACL venues, via a
 keyword filter, a GPT-4o-mini screen and expert review. Each benchmark was coded
@@ -50,8 +49,7 @@ on a 30-field codebook.</p>
 
 <p>They also measured their own reviewers. On a 46 paper double-review the mean
 agreement was BPK 0.524, and on the most judgment heavy field, task ecology, it
-was 0.146. A paper about measurement reporting the noise in its own
-measurement, which is more than most benchmarks do.</p>
+was 0.146.</p>
 
 <h2 id="checklist">2. The checklist<a class="anchor" href="#checklist" aria-label="Link to this section">#</a></h2>
 
@@ -87,9 +85,7 @@ baseline.</li>
 
 <h2 id="thoughts">4. My thoughts<a class="anchor" href="#thoughts" aria-label="Link to this section">#</a></h2>
 
-<p>I ran the full 28 item checklist on GDPval, which postdates their dataset. Two
-raters, disagreements recorded rather than merged, checkable items separated
-from judgment calls. GDPval came out at 11 pass, 9 partial, 4 fail, 4 not
+<p>I ran the full 28 item checklist on GDPval, which postdates their dataset. GDPval came out at 11 pass, 9 partial, 4 fail, 4 not
 applicable. It sits near the top of their dataset on most columns.</p>
 
 <p>However, the checklist missed a key criticism of GDPval in that the rubrics were flawed when executed. So I think it can be adapted on a case by case basis for auditing benchmarks like GDPval, the structure
