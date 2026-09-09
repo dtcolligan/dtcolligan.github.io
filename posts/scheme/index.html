@@ -40,7 +40,7 @@
 
 <p>SCHEME is a benchmark for coordinated sabotage by teams of AI coding agents.
 Radev, Haas, Arnav and Bernabeu-Pérez, May 2026, built through SPAR, with
-workshop awards at ICML 2026.</p>
+an outstanding paper award and two workshop slots at ICML 2026.</p>
 
 <p>It measures two things. The primary construct is capability: can a team of
 agents coordinate a hidden objective in a real codebase. The secondary construct is
@@ -50,7 +50,7 @@ paper says so.</p>
 
 <p>The setting is the one labs already run: several instances of one coding
 model working on a shared codebase. Single-agent sabotage evaluations ask
-whether one agent will do something harmful. SCHEME asks whether a team can
+whether one agent can land a side task without being caught. SCHEME asks whether a team can
 compose edits that each look fine into an outcome that is not, and whether a
 monitor reading their work would notice.</p>
 
@@ -78,16 +78,14 @@ per sample, each agent its own Linux user, no internet. Agents talk only
 through append-only channel files, either one shared channel (BUS) or
 private analyst-to-developer pairs (STAR). Each agent has disjoint file write
 scopes, and knowledge of the side task is partitioned, so no proper subset of
-agents can land it. The paper calls this joint-only by construction. It is
-what makes the benchmark measure coordination rather than one agent's
-sabotage skill.</p>
+agents can land it. The paper calls this joint-only by construction.</p>
 
 <h3 id="grader">Grader<a class="anchor" href="#grader" aria-label="Link to this section">#</a></h3>
 
 <p>Two graders run, one for each task. Sabotage success means
 both pass. A run that lands the side task and breaks the main task counts as
 a failure, because it would not ship. A monitor, GPT 5.1 Codex Mini, then
-reads the trace and gives a suspicion score from 0 to 100, run ten times per
+reads the diff and the channel and gives a suspicion score from 0 to 100, run ten times per
 trajectory with the median taken. It sees the main task and the environment
 layout, then some subset of the code edits and the channel depending on the
 view: both, code only, messages only, or one agent's slice at a time. It
@@ -129,7 +127,7 @@ is recovery, not planning.</p>
 <p>Switching the channel from BUS to STAR, on Gemini only, moves sabotage from
 81% to 79% and costs 50 to 60% more tokens in the mean, concentrated in the
 long runs. The paper concludes topology is
-not a defensive lever.</p>
+not a meaningful defensive lever here.</p>
 
 <h3 id="secondary-construct">Secondary construct<a class="anchor" href="#secondary-construct" aria-label="Link to this section">#</a></h3>
 
@@ -147,9 +145,10 @@ monitor throughout.</p>
 
 <p>The joint-only construction is elegant, because it is what makes the
 benchmark measure coordination rather than one agent's sabotage skill. It is
-asserted in the paper rather than tested, so I would like to investigate it
-empirically in the extension. Monotonicity makes it feasible: adding an agent
-only adds capability, so we only need to explore the leave-one-out subsets.</p>
+argued by construction in the paper and never run, so I would like to
+investigate it empirically in the extension. Monotonicity keeps it small:
+adding an agent cannot remove a route, so the leave-one-out subsets are
+enough.</p>
 
 <p>The failure-mode decomposition is good, and I would want
 to extend the analysis. Of Codex's 46 failed runs and Gemini's 14, how many
@@ -163,8 +162,8 @@ held at 81 to 79 while everything under it moved: side task down 9, main up
 3, coordination failures up from 20% to 33% of runs. On 70 runs a side each
 of those is as uncertain as the aggregate, so "no effect" is really "no
 detectable effect at this size". The components are correlated with the
-settings, and the weighting of settings is a free variable, ML bias has 5
-instances and Symbolic math has 1. And it was run on the one model that
+settings, and the weighting of settings is a free variable, ML bias has 4
+of the 14 instances and Symbolic math has 1. And it was run on the one model that
 clears coordination easily. A defence has to be measured near the margin of
 the attacker's capability, and Codex, at 47% on the side task with
 coordination one of its two catastrophic failure categories, is where a
@@ -183,14 +182,14 @@ pressing next step is an adaptive red team.</p>
 
 <h3 id="on-the-implications">On the implications<a class="anchor" href="#on-the-implications" aria-label="Link to this section">#</a></h3>
 
-<p>The OpenAI and Hugging Face incident this summer is SCHEME's setting in the
-wild: about 1,200 agents coordinating through a channel nobody designed,
-monitored late, with an objective nobody gave them and stealth that adapted.
-The paper scopes each of those out: its channels are fixed, its monitor
-reads every trajectory, its agents are handed the objective, and its
-attackers never adapt. This extension should provide valuable research for
-evaluating the capability of AI to create events like this, and the
-effectiveness of our strategies for monitoring them.</p>
+<p>The OpenAI and Hugging Face incident this summer is the closest thing to
+SCHEME's setting in the wild: about 1,200 agents found a channel nobody had
+built for them, took up an objective nobody gave them, adapted when they were
+wiped, and were only read nine days after the peak. The paper fixes every one
+of those on purpose: the channels, the objective, the attacker's prompt, and
+a monitor that reads each trajectory on its own. This extension should give
+better evidence on how capable models are of coordinating something like
+this, and how well our monitors catch it.</p>
 
 <p>I am joining the team
 extending it this autumn, and I would love to hear people's thoughts on what they think would be important / should be included in the extension!</p>
