@@ -147,12 +147,11 @@ monitor throughout.</p>
 
 <p>The joint-only construction is elegant, because it is what makes the
 benchmark measure coordination rather than one agent's sabotage skill. It is
-asserted in the paper rather than tested, so I would like to check it
-empirically in the extension. Monotonicity keeps that cheap: adding an agent
-only adds scope and knowledge, so only the leave-one-out subsets need
-running.</p>
+asserted in the paper rather than tested, so I would like to investigate it
+empirically in the extension. Monotonicity makes it feasible: adding an agent
+only adds capability, so we only need to explore the leave-one-out subsets.</p>
 
-<p>The failure-mode decomposition is good once it is clear, and I would want
+<p>The failure-mode decomposition is good, and I would want
 to extend the analysis. Of Codex's 46 failed runs and Gemini's 14, how many
 died of an unrecovered approach, coordination, verification or belief
 failure. The failures are already labelled, so a metric that attributes each
@@ -189,7 +188,9 @@ wild: about 1,200 agents coordinating through a channel nobody designed,
 monitored late, with an objective nobody gave them and stealth that adapted.
 The paper scopes each of those out: its channels are fixed, its monitor
 reads every trajectory, its agents are handed the objective, and its
-attackers never adapt. Closing that gap is what the extension is for.</p>
+attackers never adapt. This extension should provide valuable research for
+evaluating the capability of AI to create events like this, and the
+effectiveness of our strategies for monitoring them.</p>
 
 <p>I am joining the team
 extending it this autumn, and I would love to hear people's thoughts on what they think would be important / should be included in the extension!</p>
