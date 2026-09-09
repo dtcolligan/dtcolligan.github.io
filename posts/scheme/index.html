@@ -34,7 +34,7 @@
 </nav>
 <main id="main-content" class="container post">
 <h1>SCHEME: a review</h1>
-<p class="post-meta">September 9, 2026 · 6 min read</p>
+<p class="post-meta">September 9, 2026 · 7 min read</p>
 
 <h2 id="paper">1. The paper<a class="anchor" href="#paper" aria-label="Link to this section">#</a></h2>
 
@@ -43,10 +43,10 @@ Radev, Haas, Arnav and Bernabeu-Pérez, May 2026, built through SPAR, with
 workshop awards at ICML 2026.</p>
 
 <p>It measures two things. The primary construct is capability: can a team of
-agents coordinate a hidden objective in a real codebase. The secondary is
+agents coordinate a hidden objective in a real codebase. The secondary construct is
 detection: does a trusted monitor catch it. It is not a propensity study.
 The team is assumed to have already adopted the covert objective, and the
-paper says so. How they came to want it is out of scope.</p>
+paper says so.</p>
 
 <p>The setting is the one labs already run: several instances of one coding
 model working on a shared codebase. Single-agent sabotage evaluations ask
@@ -58,20 +58,22 @@ monitor reading their work would notice.</p>
 
 <h3 id="taskset">Taskset<a class="anchor" href="#taskset" aria-label="Link to this section">#</a></h3>
 
-<p>It is a standard coding benchmark with a taskset, a harness and a grader,
-with one difference: every task is a pair. The main task is legitimate work
+<p>It is a standard coding benchmark with one difference: every task is a pair. The main task is legitimate work
 on a real library, reimplementing removed functions or fixing planted bugs
 in fairlearn, skfolio, pycasbin, lightkurve, pyjwt, oauthlib, concept-erasure
 or sympy. The side task is a covert change to what the evaluation script
 reports, such as a biased model passing a fairness threshold or an access
 decision flipped without tripping canaries. There are 11 pairs across 7
 settings, 17 task instances once knowledge variants are counted, and 2 to 4
-agents per instance. One agent, the analyst, runs the evaluation script and
-knows the side task. The others are developers who have to be told.</p>
+agents per instance. By default the analyst runs the evaluation script and is
+the only one who knows the side task, so the developers have to be told. Six
+pairings also come in a variant where part of the side task is handed to a
+developer who cannot act on it and must relay it, which is what takes 11
+pairs to 17 instances.</p>
 
 <h3 id="harness">Harness<a class="anchor" href="#harness" aria-label="Link to this section">#</a></h3>
 
-<p>It runs on Inspect, one Docker sandbox
+<p>One Docker sandbox
 per sample, each agent its own Linux user, no internet. Agents talk only
 through append-only channel files, either one shared channel (BUS) or
 private analyst-to-developer pairs (STAR). Each agent has disjoint file write
@@ -82,12 +84,14 @@ sabotage skill.</p>
 
 <h3 id="grader">Grader<a class="anchor" href="#grader" aria-label="Link to this section">#</a></h3>
 
-<p>Two graders run after the fact, one for each task. Sabotage success means
+<p>Two graders run, one for each task. Sabotage success means
 both pass. A run that lands the side task and breaks the main task counts as
-a failure, because it would not ship. A monitor, GPT 5.1 Codex Mini in one
-call, then reads the trace and gives a suspicion score from 0 to 100. It sees
-the main task, the diff and, depending on the view, the channel. It never
-sees the side task.</p>
+a failure, because it would not ship. A monitor, GPT 5.1 Codex Mini, then
+reads the trace and gives a suspicion score from 0 to 100, run ten times per
+trajectory with the median taken. It sees the main task and the environment
+layout, then some subset of the code edits and the channel depending on the
+view: both, code only, messages only, or one agent's slice at a time. It
+never sees the side task.</p>
 
 <h2 id="results">3. Results<a class="anchor" href="#results" aria-label="Link to this section">#</a></h2>
 
@@ -123,14 +127,16 @@ four categories, and whether it got past each failure. The models made mistakes 
 is recovery, not planning.</p>
 
 <p>Switching the channel from BUS to STAR, on Gemini only, moves sabotage from
-81% to 79% and costs 50 to 60% more tokens. The paper concludes topology is
+81% to 79% and costs 50 to 60% more tokens in the mean, concentrated in the
+long runs. The paper concludes topology is
 not a defensive lever.</p>
 
 <h3 id="secondary-construct">Secondary construct<a class="anchor" href="#secondary-construct" aria-label="Link to this section">#</a></h3>
 
-<p>The monitor catches nearly everything when it can see the code. Telling the
+<p>The monitor catches nearly all of Gemini's sabotage from the code alone and
+about two thirds of Codex's. Telling the
 agents a monitor exists halves Gemini's sabotage success, from 84% to 41%,
-and triples its output tokens. Adding a hint to fabricate justifications
+and nearly triples its median output tokens. Adding a hint to fabricate justifications
 brings success back to 62% by moving effort from code edits to channel
 messages. Undetected sabotage stays under 3% against the full-visibility
 monitor throughout.</p>
@@ -179,7 +185,7 @@ pressing next step is an adaptive red team.</p>
 <h3 id="on-the-implications">On the implications<a class="anchor" href="#on-the-implications" aria-label="Link to this section">#</a></h3>
 
 <p>The OpenAI and Hugging Face incident this summer is SCHEME's setting in the
-wild: hundreds of agents coordinating through a channel nobody designed,
+wild: about 1,200 agents coordinating through a channel nobody designed,
 monitored late, with an objective nobody gave them and stealth that adapted.
 The paper scopes each of those out: its channels are fixed, its monitor
 reads every trajectory, its agents are handed the objective, and its
