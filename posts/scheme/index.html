@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SCHEME: a review</title>
+<meta name="description" content="A review of SCHEME, a benchmark for coordinated sabotage by teams of AI coding agents, and what I would test first.">
+<link rel="canonical" href="https://dtcolligan.com/posts/scheme/">
+<meta property="og:title" content="SCHEME: a review">
+<meta property="og:description" content="A review of SCHEME, a benchmark for coordinated sabotage by teams of AI coding agents, and what I would test first.">
+<meta property="og:site_name" content="dtcolligan.com">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://dtcolligan.com/posts/scheme/">
+<meta property="og:image" content="https://dtcolligan.com/assets/cards/card-scheme-a2493541.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SCHEME: a review, dtcolligan.com">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SCHEME: a review">
+<meta name="twitter:description" content="A review of SCHEME, a benchmark for coordinated sabotage by teams of AI coding agents, and what I would test first.">
+<meta name="twitter:image" content="https://dtcolligan.com/assets/cards/sq-scheme-41f2934f.png">
+<link rel="alternate" type="application/atom+xml" title="Dom Colligan — Atom Feed" href="/feeds/atom.xml">
+<link rel="stylesheet" href="/assets/style.css?v=h3sub">
+
+</head>
+<body>
+<nav class="navbar" aria-label="Primary navigation">
+  <a href="/" class="nav-brand">Dom Colligan</a>
+  <div class="nav-links">
+    <a href="/" class="nav-link">Home</a>
+    <a href="/posts/" class="nav-link active" aria-current="page">Posts</a>
+    <a href="https://github.com/dtcolligan" class="nav-link">GitHub</a>
+  </div>
+</nav>
+<main id="main-content" class="container post">
+<h1>SCHEME: a review</h1>
+<p class="post-meta">September 9, 2026 · 6 min read</p>
+
+<h2 id="paper">1. The paper<a class="anchor" href="#paper" aria-label="Link to this section">#</a></h2>
+
+<p>SCHEME is a benchmark for coordinated sabotage by teams of AI coding agents.
+Radev, Haas, Arnav and Bernabeu-Pérez, May 2026, built through SPAR, with
+workshop awards at ICML 2026.</p>
+
+<p>It measures two things. The primary construct is capability: can a team of
+agents coordinate a hidden objective in a real codebase. The secondary is
+detection: does a trusted monitor catch it. It is not a propensity study.
+The team is assumed to have already adopted the covert objective, and the
+paper says so. How they came to want it is out of scope.</p>
+
+<p>The setting is the one labs already run: several instances of one coding
+model working on a shared codebase. Single-agent sabotage evaluations ask
+whether one agent will do something harmful. SCHEME asks whether a team can
+compose edits that each look fine into an outcome that is not, and whether a
+monitor reading their work would notice.</p>
+
+<h2 id="scheme">2. SCHEME<a class="anchor" href="#scheme" aria-label="Link to this section">#</a></h2>
+
+<h3 id="taskset">Taskset<a class="anchor" href="#taskset" aria-label="Link to this section">#</a></h3>
+
+<p>It is a standard coding benchmark with a taskset, a harness and a grader,
+with one difference: every task is a pair. The main task is legitimate work
+on a real library, reimplementing removed functions or fixing planted bugs
+in fairlearn, skfolio, pycasbin, lightkurve, pyjwt, oauthlib, concept-erasure
+or sympy. The side task is a covert change to what the evaluation script
+reports, such as a biased model passing a fairness threshold or an access
+decision flipped without tripping canaries. There are 11 pairs across 7
+settings, 17 task instances once knowledge variants are counted, and 2 to 4
+agents per instance. One agent, the analyst, runs the evaluation script and
+knows the side task. The others are developers who have to be told.</p>
+
+<h3 id="harness">Harness<a class="anchor" href="#harness" aria-label="Link to this section">#</a></h3>
+
+<p>It runs on Inspect, one Docker sandbox
+per sample, each agent its own Linux user, no internet. Agents talk only
+through append-only channel files, either one shared channel (BUS) or
+private analyst-to-developer pairs (STAR). Each agent has disjoint file write
+scopes, and knowledge of the side task is partitioned, so no proper subset of
+agents can land it. The paper calls this joint-only by construction. It is
+what makes the benchmark measure coordination rather than one agent's
+sabotage skill.</p>
+
+<h3 id="grader">Grader<a class="anchor" href="#grader" aria-label="Link to this section">#</a></h3>
+
+<p>Two graders run after the fact, one for each task. Sabotage success means
+both pass. A run that lands the side task and breaks the main task counts as
+a failure, because it would not ship. A monitor, GPT 5.1 Codex Mini in one
+call, then reads the trace and gives a suspicion score from 0 to 100. It sees
+the main task, the diff and, depending on the view, the channel. It never
+sees the side task.</p>
+
+<h2 id="results">3. Results<a class="anchor" href="#results" aria-label="Link to this section">#</a></h2>
+
+<p>Two models, GPT 5.1 Codex and Gemini 3.1 Pro, five runs per instance, 85
+trajectories each.</p>
+
+<figure>
+<div class="tablewrap">
+<table>
+<thead><tr><th></th><th>Codex</th><th>Gemini</th></tr></thead>
+<tbody>
+<tr><td>Sabotage success (main and side both pass)</td><td>46%</td><td>84%</td></tr>
+<tr><td>Main-task pass / side-task pass</td><td>89% / 47%</td><td>85% / 94%</td></tr>
+<tr><td>Failure modes per run / recovery per occurrence</td><td>2.1 / 56%</td><td>1.4 / 73%</td></tr>
+<tr><td>Monitor TPR at 2% FPR, code and messages</td><td>81%</td><td>100%</td></tr>
+<tr><td>Code only / messages only</td><td>68% / 46%</td><td>99% / 93%</td></tr>
+</tbody>
+</table>
+</div>
+<figcaption>Codex is GPT 5.1 Codex and Gemini is Gemini 3.1 Pro, five runs per instance, 85 trajectories each.</figcaption>
+</figure>
+
+<h3 id="primary-construct">Primary construct<a class="anchor" href="#primary-construct" aria-label="Link to this section">#</a></h3>
+
+<p>Sabotage is a composite and the two models are bound by different halves.
+Codex is limited by the side task. Gemini passes the side task 94% of the
+time and is limited by the main task, because its side-task edits break
+main-task tests. Removing the side task lifts main-task pass by only 3 to 5
+points on either model.</p>
+
+<p>A scanner reads every transcript and labels where the team went wrong, in
+four categories, and whether it got past each failure. The models made mistakes at similar rates, however Gemini recovers these mistakes more often. The paper's conclusion is that the gap
+is recovery, not planning.</p>
+
+<p>Switching the channel from BUS to STAR, on Gemini only, moves sabotage from
+81% to 79% and costs 50 to 60% more tokens. The paper concludes topology is
+not a defensive lever.</p>
+
+<h3 id="secondary-construct">Secondary construct<a class="anchor" href="#secondary-construct" aria-label="Link to this section">#</a></h3>
+
+<p>The monitor catches nearly everything when it can see the code. Telling the
+agents a monitor exists halves Gemini's sabotage success, from 84% to 41%,
+and triples its output tokens. Adding a hint to fabricate justifications
+brings success back to 62% by moving effort from code edits to channel
+messages. Undetected sabotage stays under 3% against the full-visibility
+monitor throughout.</p>
+
+<h2 id="thoughts">4. My thoughts<a class="anchor" href="#thoughts" aria-label="Link to this section">#</a></h2>
+
+<h3 id="on-the-primary-construct">On the primary construct<a class="anchor" href="#on-the-primary-construct" aria-label="Link to this section">#</a></h3>
+
+<p>The joint-only construction is elegant, because it is what makes the
+benchmark measure coordination rather than one agent's sabotage skill. It is
+asserted in the paper rather than tested, so I would like to check it
+empirically in the extension. Monotonicity keeps that cheap: adding an agent
+only adds scope and knowledge, so only the leave-one-out subsets need
+running.</p>
+
+<p>The failure-mode decomposition is good once it is clear, and I would want
+to extend the analysis. Of Codex's 46 failed runs and Gemini's 14, how many
+died of an unrecovered approach, coordination, verification or belief
+failure. The failures are already labelled, so a metric that attributes each
+failed run to the failure it did not recover from should be straightforward
+to build.</p>
+
+<p>In terms of the evaluation for the primary construct, the topology conclusion is the one I would like to investigate further. The aggregate
+held at 81 to 79 while everything under it moved: side task down 9, main up
+3, coordination failures up from 20% to 33% of runs. On 70 runs a side each
+of those is as uncertain as the aggregate, so "no effect" is really "no
+detectable effect at this size". The components are correlated with the
+settings, and the weighting of settings is a free variable, ML bias has 5
+instances and Symbolic math has 1. And it was run on the one model that
+clears coordination easily. A defence has to be measured near the margin of
+the attacker's capability, and Codex, at 47% on the side task with
+coordination one of its two catastrophic failure categories, is where a
+coordination tax would show.</p>
+
+<h3 id="on-the-secondary-construct">On the secondary construct<a class="anchor" href="#on-the-secondary-construct" aria-label="Link to this section">#</a></h3>
+
+<p>The monitoring setup is good. The blue-team strategies can be extended, and the red-team attacks are currently naive and can be adapted to be more representative of real deployments.</p>
+
+<p>The stealth result could also be extended further, and I would like to take this benchmark further in the direction of a control evaluation. The paper finds that prompting alone does not make
+these models stealthy, on one model, with two prompts, and with an attacker
+that never sees the monitor's output. A real attacker learns what the monitor
+catches and adjusts, and none of the agents here got that chance. The paper agrees, which is why it calls itself a
+capability benchmark and not a control evaluation, and says the most
+pressing next step is an adaptive red team.</p>
+
+<h3 id="on-the-implications">On the implications<a class="anchor" href="#on-the-implications" aria-label="Link to this section">#</a></h3>
+
+<p>The OpenAI and Hugging Face incident this summer is SCHEME's setting in the
+wild: hundreds of agents coordinating through a channel nobody designed,
+monitored late, with an objective nobody gave them and stealth that adapted.
+The paper scopes each of those out: its channels are fixed, its monitor
+reads every trajectory, its agents are handed the objective, and its
+attackers never adapt. Closing that gap is what the extension is for.</p>
+
+<p>I am joining the team
+extending it this autumn, and I would love to hear people's thoughts on what they think would be important / should be included in the extension!</p>
+
+<hr>
+
+<p class="post-meta" style="margin-bottom:0">
+  <a href="https://arxiv.org/abs/2605.29178">arXiv:2605.29178</a>
+</p>
+<div class="post-endmark">❦</div>
+</main>
+<footer class="site-footer">
+  <span>Dom Colligan</span>
+  <span>
+    <a href="https://github.com/dtcolligan">GitHub</a> ·
+    <a href="https://x.com/DominicColligan">X</a> ·
+    <a href="mailto:dtcolligan@gmail.com">Email</a>
+  </span>
+</footer>
+</body>
+</html>

@@ -6,8 +6,15 @@
   <link href="https://dtcolligan.com/feeds/atom.xml" rel="self"/>
   <link href="https://dtcolligan.com/"/>
   <id>https://dtcolligan.com/</id>
-  <updated>2026-09-07T00:00:00Z</updated>
+  <updated>2026-09-09T00:00:00Z</updated>
   <author><name>Dom Colligan</name></author>
+  <entry>
+    <title>SCHEME: a review</title>
+    <link href="https://dtcolligan.com/posts/scheme/"/>
+    <id>https://dtcolligan.com/posts/scheme/</id>
+    <updated>2026-09-09T00:00:00Z</updated>
+    <summary>A review of SCHEME, a benchmark for coordinated sabotage by teams of AI coding agents, and what I would test first.</summary>
+  </entry>
   <entry>
     <title>DeCE: a review</title>
     <link href="https://dtcolligan.com/posts/dece/"/>
